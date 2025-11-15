@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九龍城AR解謎遊戲</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
+        #game-info { 
+            position: fixed; 
+            bottom: 10px; 
+            left: 10px; 
+            right: 10px; 
+            background: rgba(0,0,0,0.8); 
+            color: white; 
+            padding: 15px; 
+            border-radius: 10px;
+            z-index: 9999;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        #game-info button {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+        #game-info input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .test-mode-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff6b6b;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            z-index: 10000;
+            font-weight: bold;
+        }
+        .material-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #4ecdc4;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            z-index: 10000;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; debugUIEnabled: false">
+        <a-assets>
+            <video id="ar-video-1" src="https://www.youtube.com/embed/dQw4w9WgXcQ" autoplay loop></video>
+        </a-assets>
+        
+        <!-- AR標記會由JavaScript動態生成 -->
+    </a-scene>
+
+    <div id="game-info">
+        <h3 id="level-title">關卡載入中...</h3>
+        <p id="level-desc"></p>
+        <input type="text" id="password-input" placeholder="輸入關卡密碼" style="display:none;">
+        <button id="submit-btn" style="display:none;">提交密碼</button>
+        <button id="next-level-btn" style="display:none;">前往下一關</button>
+    </div>
+
+    <script>
+        // 遊戲設定
+        const GAME_CONFIG = {
+            totalLevels: 5,
+            apiUrl: '你的Web應用程式URL', // 從步驟3複製貼上
+            spreadsheetId: '你的試算表ID', // 從步驟1複製
+            mode: new URLSearchParams(window.location.search).get('mode') || 'real'
+        };
+
+        // 關卡資料（可從Google Sheets讀取，這裡先硬編碼）
+        const LEVELS = [
+            {
+                id: 1,
+                name: '九龍城寨公園',
+                desc: '尋找「衙府」石碑，記下門牌號碼',
+                password: '1987',
+                gps: { lat: 22.3316, lng: 114.1928 }
+            },
+            {
+                id: 2,
+                name: '宋皇臺',
+                desc: '計算石階數 × 朝代數，再反轉數字',
+                password: '231',
+                gps: { lat: 22.3305, lng: 114.1935 }
+            },
+            {
+                id: 3,
+                name: '海心公園',
+                desc: '解讀燈塔閃爍頻率的摩斯密碼',
+                password: '6224',
+                gps: { lat: 22.3294, lng: 114.1942 }
+            },
+            {
+                id: 4,
+                name: '牛棚藝術村',
+                desc: '藝術家生日 = 畫作數 × 門牌諧音',
+                password: '2',
+                gps: { lat: 22.3283, lng: 114.1950 }
+            },
+            {
+                id: 5,
+                name: '十三街',
+                desc: '最後的龍藏在數字裡，需團隊協作',
+                password: '0093',
+                gps: { lat: 22.3272, lng: 114.1958 }
+            }
+        ];
+
+        let currentLevel = 1;
+        let teamData = {
+            name: '',
+            email: '',
+            startTime: null,
+            currentLevel: 1,
+            mode: GAME_CONFIG.mode
+        };
+
+        // 初始化和事件綁定
+        document.addEventListener('DOMContentLoaded', function() {
+            initGame();
+        });
+
+        function initGame() {
+            // 顯示測試模式橫幅
+            if(GAME_CONFIG.mode === 'test') {
+                showTestBanner();
+            }
+            
+            // 獲取隊伍資料
+            getTeamInfo();
+            
+            // 載入第一關
+            loadLevel(currentLevel);
+        }
+
+        function showTestBanner() {
+            const banner = document.createElement('div');
+            banner.className = 'test-mode-banner';
+            banner.textContent = '🧪 測試模式 - 使用虛擬GPS座標';
+            document.body.appendChild(banner);
+        }
+
+        function getTeamInfo() {
+            const savedTeam = localStorage.getItem('teamData');
+            if(savedTeam) {
+                teamData = JSON.parse(savedTeam);
+                return;
+            }
+            
+            // 簡單的隊伍註冊表單
+            const teamName = prompt('請輸入隊伍名稱：');
+            const email = prompt('請輸入聯絡電郵：');
+            
+            teamData.name = teamName;
+            teamData.email = email;
+            teamData.startTime = new Date();
+            
+            localStorage.setItem('teamData', JSON.stringify(teamData));
+        }
+
+        function loadLevel(levelNum) {
+            const level = LEVELS[levelNum - 1];
+            
+            document.getElementById('level-title').textContent = `關卡 ${levelNum}: ${level.name}`;
+            document.getElementById('level-desc').textContent = level.desc;
+            
+            // 清除之前的AR標記
+            const scene = document.querySelector('a-scene');
+            const oldMarkers = scene.querySelectorAll('.level-marker');
+            oldMarkers.forEach(m => m.remove());
+            
+            if(GAME_CONFIG.mode === 'test') {
+                // 測試模式：直接顯示AR標記
+                createARMarker(level);
+            } else {
+                // 真實模式：使用GPS
+                createGPSMarker(level);
+            }
+            
+            // 顯示密碼輸入框
+            document.getElementById('password-input').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'block';
+            
+            // 綁定提交按鈕
+            document.getElementById('submit-btn').onclick = function() {
+                checkPassword(level.password, levelNum);
+            };
+        }
+
+        function createARMarker(level) {
+            const scene = document.querySelector('a-scene');
+            const marker = document.createElement('a-box');
+            marker.setAttribute('class', 'level-marker');
+            marker.setAttribute('position', '0 1.5 -3');
+            marker.setAttribute('rotation', '0 45 0');
+            marker.setAttribute('color', '#4ecdc4');
+            marker.setAttribute('material', 'opacity: 0.8; transparent: true');
+            
+            // 添加點擊事件
+            marker.addEventListener('click', function() {
+                alert('AR標記已觸發！請查看關卡提示。');
+            });
+            
+            scene.appendChild(marker);
+        }
+
+        function createGPSMarker(level) {
+            const scene = document.querySelector('a-scene');
+            const gpsMarker = document.createElement('a-box');
+            gpsMarker.setAttribute('class', 'level-marker');
+            gpsMarker.setAttribute('gps-entity-place', `latitude: ${level.gps.lat}; longitude: ${level.gps.lng}`);
+            gpsMarker.setAttribute('position', '0 30 0');
+            gpsMarker.setAttribute('material', 'color: #4ecdc4; opacity: 0.8; transparent: true');
+            
+            scene.appendChild(gpsMarker);
+        }
+
+        function checkPassword(correctPassword, levelNum) {
+            const userInput = document.getElementById('password-input').value;
+            
+            if(userInput === correctPassword) {
+                alert('密碼正確！');
+                
+                // 更新隊伍進度
+                teamData.currentLevel = levelNum + 1;
+                localStorage.setItem('teamData', JSON.stringify(teamData));
+                
+                // 傳送資料到後台
+                updateBackend(levelNum, 'completed');
+                
+                if(levelNum < GAME_CONFIG.totalLevels) {
+                    // 顯示下一關按鈕
+                    document.getElementById('next-level-btn').style.display = 'block';
+                    document.getElementById('next-level-btn').onclick = function() {
+                        currentLevel++;
+                        loadLevel(currentLevel);
+                    };
+                } else {
+                    // 遊戲完成
+                    completeGame();
+                }
+            } else {
+                alert('密碼錯誤，請再試一次！');
+            }
+        }
+
+        function updateBackend(levelNum, status) {
+            const payload = {
+                teamName: teamData.name,
+                email: teamData.email,
+                currentLevel: levelNum,
+                mode: GAME_CONFIG.mode,
+                timestamp: new Date()
+            };
+            
+            fetch(GAME_CONFIG.apiUrl, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            }).catch(error => console.log('後台更新失敗:', error));
+        }
+
+        function completeGame() {
+            const endTime = new Date();
+            const duration = (endTime - new Date(teamData.startTime)) / 1000 / 60; // 分鐘
+            
+            const finalScore = Math.max(1000 - Math.floor(duration * 10), 100);
+            
+            alert(`遊戲完成！總用時：${duration.toFixed(1)} 分鐘\n預估得分：${finalScore}`);
+            
+            // 傳送完成資料到後台
+            fetch(GAME_CONFIG.apiUrl, {
+                method: 'POST',
+                body: JSON.stringify({
+                    teamName: teamData.name,
+                    email: teamData.email,
+                    currentLevel: 5,
+                    completeTime: endTime.toISOString(),
+                    totalScore: finalScore,
+                    mode: GAME_CONFIG.mode
+                })
+            });
+        }
+    </script>
+</body>
+</html>
