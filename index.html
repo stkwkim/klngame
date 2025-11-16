@@ -906,15 +906,22 @@
 
         // 初始化憑證資料（如果本地存儲中沒有，使用預設值）
         function initializeCredentials() {
-            if (!localStorage.getItem('credentials')) {
-                const defaultCredentials = [
-                    { phone: '13800138000', code: '123456' },
-                    { phone: '13900139000', code: '654321' },
-                    { phone: '13700137000', code: '888888' }
-                ];
-                localStorage.setItem('credentials', JSON.stringify(defaultCredentials));
-                console.log('✅ 已初始化預設憑證');
-            }
+// 1. 最新「活著」的清單（想廢就刪那一行）
+const defaultCredentials = [
+    { phone: '14000140000', code: '000000' },
+    { phone: '14100141000', code: '111111' }
+];
+
+// 2. 黑名單：列出手機號即可
+const blacklist = ['13800138000', '13900139000'];
+
+// 3. 先清掉 localStorage 裡的黑名單，再補新號
+let local = JSON.parse(localStorage.getItem('credentials') || '[]');
+local = local.filter(c => !blacklist.includes(c.phone));
+defaultCredentials.forEach(n => {
+    if (!local.some(l => l.phone === n.phone)) local.push(n);
+});
+localStorage.setItem('credentials', JSON.stringify(local));
             updateCredentialsList();
         }
 
