@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九龍城土瓜灣探索</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #1a2a6c, #b21f1f);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #ccc;
+        }
+        
+        .intro p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .location-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 15px;
+        }
+        
+        .card-overlay h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .card-content {
+            padding: 15px;
+        }
+        
+        .card-content p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 15px;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .feature h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #1a2a6c;
+        }
+        
+        .feature p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(90deg, #1a2a6c, #b21f1f);
+            color: white;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .cta-section h2 {
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .cta-section p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #ffcc00;
+            color: #1a2a6c;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            background: #ffd84d;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .locations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .feature {
+                min-width: 100%;
+                margin-bottom: 15px;
+            }
+        }
+        
+        /* 保护样式 */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .protect-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>九龍城土瓜灣探索</h1>
+            <p class="subtitle">探索香港歷史文化，體驗九龍城土瓜灣的獨特魅力</p>
+        </header>
+        
+        <div class="content">
+            <div class="intro">
+                <p>九龍城和土瓜灣是香港充滿歷史與文化的地區，擁有豐富的建築遺產、傳統市場和地道美食。這個互動應用將帶您遊覽六個重要歷史地點，深入了解這些地方的獨特故事。</p>
+                <p>通過問答、自拍打卡和多媒體內容，您將以全新方式體驗這片充滿活力的社區。</p>
+            </div>
+            
+            <div class="locations-grid">
+                <div class="location-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1593727856070-8c8daf99628f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');">
+                        <div class="card-overlay">
+                            <h3>九龍寨城公園</h3>
+                            <p>歷史遺跡</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>這裡曾是充滿傳奇的九龍寨城，一個在三不管地帶中自然形成的獨特社區。</p>
+                    </div>
+                </div>
+                
+                <div class="location-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1544984243-ec57ea16fe25?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');">
+                        <div class="card-overlay">
+                            <h3>十三街舊樓群</h3>
+                            <p>建築遺產</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>十三街見證了土瓜灣的工業發展史，戰前騎樓融合中西風格。</p>
+                    </div>
+                </div>
+                
+                <div class="location-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');">
+                        <div class="card-overlay">
+                            <h3>牛棚藝術村</h3>
+                            <p>藝術空間</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>1908 年建成的市區屠宰場，活化後成為藝術家工作室與展場。</p>
+                    </div>
+                </div>
+                
+                <div class="location-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');">
+                        <div class="card-overlay">
+                            <h3>海心公園</h3>
+                            <p>自然景觀</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>以魚尾石聞名，從前漁民在此祈求平安，園內有鄭成功石像。</p>
+                    </div>
+                </div>
+                
+                <div class="location-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1515586838455-8f8f940d6853?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');">
+                        <div class="card-overlay">
+                            <h3>宋皇臺公園</h3>
+                            <p>歷史遺跡</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>南宋最後兩位皇帝逃避元軍之地，「宋皇臺」石刻見證香港古今。</p>
+                    </div>
+                </div>
+                
+                <div class="location-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');">
+                        <div class="card-overlay">
+                            <h3>紅磡觀音廟</h3>
+                            <p>宗教建築</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>1873 年建成的香港二級歷史建築，社區信仰與凝聚核心。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🗺️</div>
+                    <h3>GPS定位</h3>
+                    <p>自動檢測您的位置，提供附近景點信息</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">📷</div>
+                    <h3>自拍打卡</h3>
+                    <p>在每個地點拍照留念並分享</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🎬</div>
+                    <h3>多媒體內容</h3>
+                    <p>觀看歷史影片和故事進度</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🏆</div>
+                    <h3>成就系統</h3>
+                    <p>完成探索獲得獎勵和證書</p>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <h2>準備開始您的探索之旅？</h2>
+                <p>下載應用程式，立即開始探索九龍城土瓜灣的豐富歷史與文化</p>
+                <a href="#" class="btn">下載應用程式</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 九龍城土瓜灣探索 | 保留所有權利</p>
+        </footer>
+    </div>
+    
+    <!-- 保护覆盖层 -->
+    <div class="protect-overlay no-select"></div>
+
+    <script>
+        // 代码保护措施
+        (function() {
+            'use strict';
+            
+            // 禁止右键菜单
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁止选择文本
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁止拖拽
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁止复制
+            document.addEventListener('copy', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁止剪切
+            document.addEventListener('cut', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁止粘贴
+            document.addEventListener('paste', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 检测开发者工具
+            function detectDevTools() {
+                var threshold = 160;
+                var widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                var heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                
+                if (widthThreshold || heightThreshold) {
+                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#1a2a6c;color:white;font-size:24px;text-align:center;">請勿使用開發者工具查看源代碼</div>';
+                }
+            }
+            
+            // 定期检测开发者工具
+            setInterval(detectDevTools, 1000);
+            
+            // 初始检测
+            detectDevTools();
+            
+            // 混淆关键函数名称
+            var _0x3d5a = ['九龍城土瓜灣探索應用', 'location', 'href', 'click', 'addEventListener', 'querySelectorAll'];
+            var appName = _0x3d5a[0];
+            var locationCards = document[_0x3d5a[5]]('.location-card');
+            
+            // 为每个地点卡片添加点击事件
+            for (var i = 0; i < locationCards.length; i++) {
+                locationCards[i][_0x3d5a[4]](_0x3d5a[3], function() {
+                    window[_0x3d5a[1]][_0x3d5a[2]] = 'https://play.google.com/store/apps/details?id=com.kowloon.explorer';
+                });
+            }
+            
+            // 下载按钮事件
+            document.querySelector('.btn')[_0x3d5a[4]](_0x3d5a[3], function(e) {
+                e.preventDefault();
+                alert('應用程式下載連結已複製到剪貼簿！');
+            });
+            
+            // 添加CSS类名保护
+            document.body.className += ' no-select';
+            
+            console.log('%c🚫 請勿複製此代碼', 'color: red; font-size: 20px; font-weight: bold;');
+            console.log('%c此應用程式代碼受版權保護', 'color: orange; font-size: 16px;');
+        })();
+    </script>
+</body>
+</html>
