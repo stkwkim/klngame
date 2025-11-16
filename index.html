@@ -1145,8 +1145,8 @@
                 }
                 
                 if (validateLogin(phone, code)) {
-                    alert('登入成功！即將進入遊戲...');
-                    // 这里可以跳转到游戏页面
+                    // 登录成功，跳转到游戏页面
+                    window.location.href = 'game.html';
                 } else {
                     alert('手機號碼或驗證碼錯誤，請重試');
                 }
