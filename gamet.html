@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>香港歷史特色探索</title>
+    <title>香港茶餐廳文化探索</title>
     <style>
         /* 基本樣式 */
         * {
@@ -19,7 +19,7 @@
         
         body {
             font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
-            background: linear-gradient(135deg, #e74c3c 0%, #e67e22 100%);
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -46,7 +46,7 @@
             text-align: center;
             margin: 0 0 1.5rem 0;
             font-size: 1.75rem;
-            background: linear-gradient(45deg, #e74c3c, #e67e22);
+            background: linear-gradient(45deg, #e67e22, #d35400);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -75,7 +75,7 @@
         .location-card {
             background: #f8f9fa;
             padding: 1.25rem;
-            border-left: 4px solid #e74c3c;
+            border-left: 4px solid #e67e22;
             border-radius: 8px;
             margin-bottom: 1rem;
             transition: transform 0.3s ease;
@@ -104,7 +104,7 @@
         }
         
         .btn {
-            background: #e74c3c;
+            background: #e67e22;
             color: #fff;
             border: none;
             padding: 0.5rem 0.75rem;
@@ -119,7 +119,7 @@
         }
         
         .btn:hover {
-            background: #c0392b;
+            background: #d35400;
             transform: translateY(-1px);
         }
         
@@ -151,7 +151,7 @@
         }
         
         input:focus {
-            border-color: #e74c3c;
+            border-color: #e67e22;
             outline: none;
         }
         
@@ -370,13 +370,20 @@
             margin-right: 8px;
             font-size: 1.2em;
         }
+        
+        .food-img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body class="no-select no-context" oncontextmenu="return false;">
-    <div class="watermark">香港歷史特色探索</div>
+    <div class="watermark">香港茶餐廳探索</div>
     
     <div class="container">
-        <h1>🏙️ 香港歷史特色探索</h1>
+        <h1>🍜 香港茶餐廳文化探索</h1>
         
         <div class="progress-container">
             <div>探索進度：<span id="progress-count">0</span> / 10</div>
@@ -481,33 +488,34 @@
 
         // 下一地點詩意提示
         var nextPoem = {
-            2: '從九龍寨城的傳奇，走進中環的繁華，下一站將帶你感受香港的金融脈搏。',
-            3: '金融中心之後，讓我們前往香港的心臟地帶，感受殖民時期的歷史痕跡。',
-            4: '從歷史建築走向傳統文化，下一站將帶你體驗香港的信仰中心。',
-            5: '信仰之旅後，讓我們前往香港最古老的街道，感受歲月的痕跡。',
-            6: '從古老街道走向藝術殿堂，下一站將帶你欣賞香港的文化瑰寶。',
-            7: '文化洗禮後，讓我們登上太平山頂，俯瞰維港的璀璨夜景。',
-            8: '從山頂俯瞰，走向海濱漫步，下一站將帶你感受香港的自然與休閒。',
-            9: '海濱漫步後，讓我們走進香港的傳統市場，體驗地道生活。',
-            10: '從市井生活走向現代奇觀，最後一站將帶你見證香港的建築奇蹟。'
+            2: '從絲襪奶茶的起源，走向炒蛋多士的傳奇，下一站將帶你品嚐澳洲牛奶公司的經典早餐。',
+            3: '早餐之後，讓我們前往香港最具代表性的茶餐廳之一，感受奶油豬仔包的魅力。',
+            4: '從經典茶餐廳走向明星最愛，下一站將帶你探索華星冰室的獨特風味。',
+            5: '明星光顧後，讓我們走進傳統冰室，品嚐祥興咖啡室的懷舊美食。',
+            6: '從傳統冰室走向懷舊餐室，下一站將帶你感受美都餐室的時光倒流。',
+            7: '懷舊之旅後，讓我們前往金華冰廳，品嚐全港最著名的菠蘿油。',
+            8: '從菠蘿油走向樽仔奶茶，下一站將帶你體驗瑞記咖啡的獨特風味。',
+            9: '樽仔奶茶之後，讓我們走進永華面家，品嚐傳統竹昇麵的獨特口感。',
+            10: '從竹昇麵走向瑞士雞翼，最後一站將帶你體驗太平館餐廳的經典西餐。'
         };
 
         // 動態載入遊戲內容
         function loadGameContent() {
             var content = '';
             
-            // 題目1 - 九龍寨城公園
+            // 題目1 - 蘭芳園
             content += '<div id="location-1" class="location-card">';
-            content += '<h2><span class="location-icon">🏯</span> 九龍寨城公園<span id="dist-1" class="distance-badge">計算中…</span></h2>';
-            content += '<p><strong>故事：</strong>這裡曾是充滿傳奇的九龍寨城，一個在三不管地帶中自然形成的獨特社區，1994年拆除後改建為公園。</p>';
+            content += '<h2><span class="location-icon">🍵</span> 蘭芳園<span id="dist-1" class="distance-badge">計算中…</span></h2>';
+            content += '<p><strong>故事：</strong>創立於1952年的蘭芳園是香港最歷史悠久的茶餐廳之一，創始人林木河先生首創"絲襪奶茶"和"鴛鴦"，成為香港飲食文化的標誌。</p>';
+            content += '<p><strong>招牌美食：</strong>絲襪奶茶、奶油豬仔包、蔥油雞扒撈丁</p>';
             content += '<div class="button-group">';
             content += '<button class="btn btn-danger" onclick="showVideo(1,\'history\')">🎬 歷史影片</button>';
             content += '<button class="btn btn-info" onclick="showVideo(1,\'story\')">📖 故事進度</button>';
             content += '</div>';
-            content += '<p><strong>問題：</strong>九龍寨城公園保留了清代衙門的哪個重要建築結構？</p>';
+            content += '<p><strong>問題：</strong>蘭芳園的創始人林木河先生首創了哪兩種經典飲品？</p>';
             content += '<input type="text" id="answer-1" placeholder="輸入您的答案">';
             content += '<div class="button-group">';
-            content += '<button class="btn" onclick="checkAnswer(1,\'衙門\')">提交答案</button>';
+            content += '<button class="btn" onclick="checkAnswer(1,\'絲襪奶茶和鴛鴦\')">提交答案</button>';
             content += '<button class="btn btn-warning" onclick="showHint(1)">💡 提示 (<span id="hint-count-1">0</span>/3)</button>';
             content += '</div>';
             content += '<div class="selfie-box">';
@@ -568,18 +576,19 @@
             var content = '';
             
             if (locationNum === 2) {
-                // 題目2 - 中環
+                // 題目2 - 澳洲牛奶公司
                 content += '<div id="location-2" class="location-card">';
-                content += '<h2><span class="location-icon">🏢</span> 中環金融區<span id="dist-2" class="distance-badge">計算中…</span></h2>';
-                content += '<p><strong>故事：</strong>中環是香港的商業與金融中心，匯聚了國際金融機構、高級品牌與歷史建築，見證香港從漁村到國際都會的轉變。</p>';
+                content += '<h2><span class="location-icon">🍳</span> 澳洲牛奶公司<span id="dist-2" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>澳洲牛奶公司是佐敦的地標茶餐廳，以其快速服務和經典港式早餐聞名，尤其是炒蛋多士，被譽為香港最美味的炒蛋。</p>';
+                content += '<p><strong>招牌美食：</strong>炒蛋多士、燉奶、蛋白燉鮮奶</p>';
                 content += '<div class="button-group">';
                 content += '<button class="btn btn-danger" onclick="showVideo(2,\'history\')">🎬 歷史影片</button>';
                 content += '<button class="btn btn-info" onclick="showVideo(2,\'story\')">📖 故事進度</button>';
                 content += '</div>';
-                content += '<p><strong>問題：</strong>中環的標誌性建築中銀大廈是由哪位著名建築師設計的？</p>';
+                content += '<p><strong>問題：</strong>澳洲牛奶公司最著名的早餐菜式是什麼？</p>';
                 content += '<input type="text" id="answer-2" placeholder="輸入您的答案">';
                 content += '<div class="button-group">';
-                content += '<button class="btn" onclick="checkAnswer(2,\'貝聿銘\')">提交答案</button>';
+                content += '<button class="btn" onclick="checkAnswer(2,\'炒蛋多士\')">提交答案</button>';
                 content += '<button class="btn btn-warning" onclick="showHint(2)">💡 提示 (<span id="hint-count-2">0</span>/3)</button>';
                 content += '</div>';
                 content += '<div class="selfie-box">';
@@ -590,18 +599,19 @@
                 content += '</div>';
             }
             else if (locationNum === 3) {
-                // 題目3 - 香港禮賓府
+                // 題目3 - 翠華餐廳
                 content += '<div id="location-3" class="location-card">';
-                content += '<h2><span class="location-icon">🏛️</span> 香港禮賓府<span id="dist-3" class="distance-badge">計算中…</span></h2>';
-                content += '<p><strong>故事：</strong>禮賓府建於1855年，曾是28位香港總督的官邸，現為香港特別行政區行政長官的官邸，見證香港150多年的歷史變遷。</p>';
+                content += '<h2><span class="location-icon">🍞</span> 翠華餐廳<span id="dist-3" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>翠華餐廳是香港最具代表性的連鎖茶餐廳之一，創立於1967年，從旺角的一家小冰室發展成為上市企業，見證了香港茶餐廳文化的演變。</p>';
+                content += '<p><strong>招牌美食：</strong>奶油豬仔包、魚蛋河粉、海南雞飯</p>';
                 content += '<div class="button-group">';
                 content += '<button class="btn btn-danger" onclick="showVideo(3,\'history\')">🎬 歷史影片</button>';
                 content += '<button class="btn btn-info" onclick="showVideo(3,\'story\')">📖 故事進度</button>';
                 content += '</div>';
-                content += '<p><strong>問題：</strong>禮賓府最初是為哪位香港總督建造的官邸？</p>';
+                content += '<p><strong>問題：</strong>翠華餐廳最著名的包點是什麼？</p>';
                 content += '<input type="text" id="answer-3" placeholder="輸入您的答案">';
                 content += '<div class="button-group">';
-                content += '<button class="btn" onclick="checkAnswer(3,\'寶寧\')">提交答案</button>';
+                content += '<button class="btn" onclick="checkAnswer(3,\'奶油豬仔包\')">提交答案</button>';
                 content += '<button class="btn btn-warning" onclick="showHint(3)">💡 提示 (<span id="hint-count-3">0</span>/3)</button>';
                 content += '</div>';
                 content += '<div class="selfie-box">';
@@ -612,18 +622,19 @@
                 content += '</div>';
             }
             else if (locationNum === 4) {
-                // 題目4 - 黃大仙祠
+                // 題目4 - 華星冰室
                 content += '<div id="location-4" class="location-card">';
-                content += '<h2><span class="location-icon">🙏</span> 黃大仙祠<span id="dist-4" class="distance-badge">計算中…</span></h2>';
-                content += '<p><strong>故事：</strong>黃大仙祠是香港最著名的廟宇之一，建於1921年，供奉道教神仙黃初平，以「有求必應」聞名，是香港重要的信仰中心。</p>';
+                content += '<h2><span class="location-icon">⭐</span> 華星冰室<span id="dist-4" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>華星冰室由前華星唱片公司高層創立，以懷舊裝修和明星效應聞名，牆上掛滿明星簽名和唱片封套，是香港娛樂圈人士的聚腳地。</p>';
+                content += '<p><strong>招牌美食：</strong>校長多士、黑松露炒蛋多士、奶茶紅豆冰</p>';
                 content += '<div class="button-group">';
                 content += '<button class="btn btn-danger" onclick="showVideo(4,\'history\')">🎬 歷史影片</button>';
                 content += '<button class="btn btn-info" onclick="showVideo(4,\'story\')">📖 故事進度</button>';
                 content += '</div>';
-                content += '<p><strong>問題：</strong>黃大仙祠主要供奉哪位道教神仙？</p>';
+                content += '<p><strong>問題：</strong>華星冰室最著名的多士是以哪位香港樂壇名人命名？</p>';
                 content += '<input type="text" id="answer-4" placeholder="輸入您的答案">';
                 content += '<div class="button-group">';
-                content += '<button class="btn" onclick="checkAnswer(4,\'黃初平\')">提交答案</button>';
+                content += '<button class="btn" onclick="checkAnswer(4,\'校長\')">提交答案</button>';
                 content += '<button class="btn btn-warning" onclick="showHint(4)">💡 提示 (<span id="hint-count-4">0</span>/3)</button>';
                 content += '</div>';
                 content += '<div class="selfie-box">';
@@ -634,18 +645,19 @@
                 content += '</div>';
             }
             else if (locationNum === 5) {
-                // 題目5 - 石板街
+                // 題目5 - 祥興咖啡室
                 content += '<div id="location-5" class="location-card">';
-                content += '<h2><span class="location-icon">🛤️</span> 石板街（砵典乍街）<span id="dist-5" class="distance-badge">計算中…</span></h2>';
-                content += '<p><strong>故事：</strong>石板街是香港最古老的街道之一，建於1845年，以香港首任總督砵典乍爵士命名，石板路面與鐵皮攤檔見證香港開埠初期的歷史。</p>';
+                content += '<h2><span class="location-icon">☕</span> 祥興咖啡室<span id="dist-5" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>祥興咖啡室是跑馬地的傳統冰室，擁有約70年歷史，保留著傳統紙皮石磚裝潢，是本地名人和街坊的聚腳點，充滿老香港情懷。</p>';
+                content += '<p><strong>招牌美食：</strong>酥皮蛋撻、餐肉煎蛋菠蘿包、奶茶</p>';
                 content += '<div class="button-group">';
                 content += '<button class="btn btn-danger" onclick="showVideo(5,\'history\')">🎬 歷史影片</button>';
                 content += '<button class="btn btn-info" onclick="showVideo(5,\'story\')">📖 故事進度</button>';
                 content += '</div>';
-                content += '<p><strong>問題：</strong>石板街的正式名稱是以哪位香港總督命名？</p>';
+                content += '<p><strong>問題：</strong>祥興咖啡室位於香港哪個地區？</p>';
                 content += '<input type="text" id="answer-5" placeholder="輸入您的答案">';
                 content += '<div class="button-group">';
-                content += '<button class="btn" onclick="checkAnswer(5,\'砵典乍\')">提交答案</button>';
+                content += '<button class="btn" onclick="checkAnswer(5,\'跑馬地\')">提交答案</button>';
                 content += '<button class="btn btn-warning" onclick="showHint(5)">💡 提示 (<span id="hint-count-5">0</span>/3)</button>';
                 content += '</div>';
                 content += '<div class="selfie-box">';
@@ -656,18 +668,19 @@
                 content += '</div>';
             }
             else if (locationNum === 6) {
-                // 題目6 - 香港文化中心
+                // 題目6 - 美都餐室
                 content += '<div id="location-6" class="location-card">';
-                content += '<h2><span class="location-icon">🎭</span> 香港文化中心<span id="dist-6" class="distance-badge">計算中…</span></h2>';
-                content += '<p><strong>故事：</strong>香港文化中心於1989年啟用，是香港重要的表演藝術場地，獨特的建築設計與尖沙咀海濱位置使其成為香港文化地標。</p>';
+                content += '<h2><span class="location-icon">🏮</span> 美都餐室<span id="dist-6" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>美都餐室是油麻地的懷舊地標，開業於1950年代，保留著彩色玻璃窗、舊式風扇和馬賽克瓷磚，是許多電影和電視劇的取景地。</p>';
+                content += '<p><strong>招牌美食：</strong>錦鹵雲吞、焗排骨飯、紅豆冰</p>';
                 content += '<div class="button-group">';
                 content += '<button class="btn btn-danger" onclick="showVideo(6,\'history\')">🎬 歷史影片</button>';
                 content += '<button class="btn btn-info" onclick="showVideo(6,\'story\')">📖 故事進度</button>';
                 content += '</div>';
-                content += '<p><strong>問題：</strong>香港文化中心的前身是什麼建築？</p>';
+                content += '<p><strong>問題：</strong>美都餐室以其懷舊的什麼設計元素聞名？</p>';
                 content += '<input type="text" id="answer-6" placeholder="輸入您的答案">';
                 content += '<div class="button-group">';
-                content += '<button class="btn" onclick="checkAnswer(6,\'九廣鐵路鐘樓\')">提交答案</button>';
+                content += '<button class="btn" onclick="checkAnswer(6,\'彩色玻璃窗\')">提交答案</button>';
                 content += '<button class="btn btn-warning" onclick="showHint(6)">💡 提示 (<span id="hint-count-6">0</span>/3)</button>';
                 content += '</div>';
                 content += '<div class="selfie-box">';
@@ -678,18 +691,19 @@
                 content += '</div>';
             }
             else if (locationNum === 7) {
-                // 題目7 - 太平山頂
+                // 題目7 - 金華冰廳
                 content += '<div id="location-7" class="location-card">';
-                content += '<h2><span class="location-icon">⛰️</span> 太平山頂<span id="dist-7" class="distance-badge">計算中…</span></h2>';
-                content += '<p><strong>故事：</strong>太平山頂是香港島最高點，自19世紀起便是富豪與外籍人士的住宅區，山頂纜車與凌霄閣讓遊客可俯瞰維多利亞港與香港全景。</p>';
+                content += '<h2><span class="location-icon">🥐</span> 金華冰廳<span id="dist-7" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>金華冰廳是太子的老字號冰室，自1973年起營業，以其馳名菠蘿油聞名全港，每日新鮮出爐的菠蘿包外皮酥脆，牛油香濃。</p>';
+                content += '<p><strong>招牌美食：</strong>菠蘿油、奶茶、蛋撻</p>';
                 content += '<div class="button-group">';
                 content += '<button class="btn btn-danger" onclick="showVideo(7,\'history\')">🎬 歷史影片</button>';
                 content += '<button class="btn btn-info" onclick="showVideo(7,\'story\')">📖 故事進度</button>';
                 content += '</div>';
-                content += '<p><strong>問題：</strong>太平山頂纜車於哪一年開始營運？</p>';
+                content += '<p><strong>問題：</strong>金華冰廳最著名的包點是什麼？</p>';
                 content += '<input type="text" id="answer-7" placeholder="輸入您的答案">';
                 content += '<div class="button-group">';
-                content += '<button class="btn" onclick="checkAnswer(7,\'1888\')">提交答案</button>';
+                content += '<button class="btn" onclick="checkAnswer(7,\'菠蘿油\')">提交答案</button>';
                 content += '<button class="btn btn-warning" onclick="showHint(7)">💡 提示 (<span id="hint-count-7">0</span>/3)</button>';
                 content += '</div>';
                 content += '<div class="selfie-box">';
@@ -700,18 +714,19 @@
                 content += '</div>';
             }
             else if (locationNum === 8) {
-                // 題目8 - 星光大道
+                // 題目8 - 瑞記咖啡
                 content += '<div id="location-8" class="location-card">';
-                content += '<h2><span class="location-icon">🎬</span> 星光大道<span id="dist-8" class="distance-badge">計算中…</span></h2>';
-                content += '<p><strong>故事：</strong>星光大道於2004年開幕，旨在表揚香港電影業界的傑出人士，仿效好萊塢星光大道，展示明星手印與雕像，是香港電影文化的象徵。</p>';
+                content += '<h2><span class="location-icon">🥤</span> 瑞記咖啡<span id="dist-8" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>瑞記咖啡是上環熟食中心的老字號，開業超過60年，以其獨特的樽仔奶茶聞名，奶茶沖好後直接灌入玻璃瓶冷藏，口感絲滑濃郁。</p>';
+                content += '<p><strong>招牌美食：</strong>樽仔奶茶、蛋牛包、西多士</p>';
                 content += '<div class="button-group">';
                 content += '<button class="btn btn-danger" onclick="showVideo(8,\'history\')">🎬 歷史影片</button>';
                 content += '<button class="btn btn-info" onclick="showVideo(8,\'story\')">📖 故事進度</button>';
                 content += '</div>';
-                content += '<p><strong>問題：</strong>星光大道上哪位武打明星的銅像最為著名？</p>';
+                content += '<p><strong>問題：</strong>瑞記咖啡最著名的飲品是什麼？</p>';
                 content += '<input type="text" id="answer-8" placeholder="輸入您的答案">';
                 content += '<div class="button-group">';
-                content += '<button class="btn" onclick="checkAnswer(8,\'李小龍\')">提交答案</button>';
+                content += '<button class="btn" onclick="checkAnswer(8,\'樽仔奶茶\')">提交答案</button>';
                 content += '<button class="btn btn-warning" onclick="showHint(8)">💡 提示 (<span id="hint-count-8">0</span>/3)</button>';
                 content += '</div>';
                 content += '<div class="selfie-box">';
@@ -722,18 +737,19 @@
                 content += '</div>';
             }
             else if (locationNum === 9) {
-                // 題目9 - 廟街夜市
+                // 題目9 - 永華面家
                 content += '<div id="location-9" class="location-card">';
-                content += '<h2><span class="location-icon">🌃</span> 廟街夜市<span id="dist-9" class="distance-badge">計算中…</span></h2>';
-                content += '<p><strong>故事：</strong>廟街夜市是香港最具特色的夜市之一，因街旁的榕樹頭天后廟而得名，以平民美食、算命攤檔與小商品聞名，被稱為「平民夜總會」。</p>';
+                content += '<h2><span class="location-icon">🍜</span> 永華面家<span id="dist-9" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>永華面家是香港少數仍堅持傳統竹昇打面技藝的面家，創立於1950年代，以其彈牙的竹昇面和鮮蝦雲吞聞名，是香港傳統美食的代表。</p>';
+                content += '<p><strong>招牌美食：</strong>鮮蝦雲吞麵、牛腩麵、桑寄蛋茶</p>';
                 content += '<div class="button-group">';
                 content += '<button class="btn btn-danger" onclick="showVideo(9,\'history\')">🎬 歷史影片</button>';
                 content += '<button class="btn btn-info" onclick="showVideo(9,\'story\')">📖 故事進度</button>';
                 content += '</div>';
-                content += '<p><strong>問題：</strong>廟街夜市因街旁的什麼廟宇而得名？</p>';
+                content += '<p><strong>問題：</strong>永華面家堅持使用什麼傳統技藝製作麵條？</p>';
                 content += '<input type="text" id="answer-9" placeholder="輸入您的答案">';
                 content += '<div class="button-group">';
-                content += '<button class="btn" onclick="checkAnswer(9,\'天后廟\')">提交答案</button>';
+                content += '<button class="btn" onclick="checkAnswer(9,\'竹昇打面\')">提交答案</button>';
                 content += '<button class="btn btn-warning" onclick="showHint(9)">💡 提示 (<span id="hint-count-9">0</span>/3)</button>';
                 content += '</div>';
                 content += '<div class="selfie-box">';
@@ -744,18 +760,19 @@
                 content += '</div>';
             }
             else if (locationNum === 10) {
-                // 題目10 - 國際金融中心
+                // 題目10 - 太平館餐廳
                 content += '<div id="location-10" class="location-card">';
-                content += '<h2><span class="location-icon">🏦</span> 國際金融中心（IFC）<span id="dist-10" class="distance-badge">計算中…</span></h2>';
-                content += '<p><strong>故事：</strong>國際金融中心是香港標誌性摩天大樓，二期高415.8米，曾是香港最高建築，象徵香港作為國際金融中心的地位，內有高級商場、辦公室與四季酒店。</p>';
+                content += '<h2><span class="location-icon">🍗</span> 太平館餐廳<span id="dist-10" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>太平館餐廳是香港最歷史悠久的西餐廳之一，創立於1860年，以其招牌瑞士雞翼和懷舊西餐聞名，保留了香港殖民時期的飲食文化。</p>';
+                content += '<p><strong>招牌美食：</strong>瑞士雞翼、焗葡國雞、梳乎厘</p>';
                 content += '<div class="button-group">';
                 content += '<button class="btn btn-danger" onclick="showVideo(10,\'history\')">🎬 歷史影片</button>';
                 content += '<button class="btn btn-info" onclick="showVideo(10,\'story\')">📖 故事進度</button>';
                 content += '</div>';
-                content += '<p><strong>問題：</strong>國際金融中心二期於哪一年落成？</p>';
+                content += '<p><strong>問題：</strong>太平館餐廳最著名的菜式是什麼？</p>';
                 content += '<input type="text" id="answer-10" placeholder="輸入您的答案">';
                 content += '<div class="button-group">';
-                content += '<button class="btn" onclick="checkAnswer(10,\'2003\')">提交答案</button>';
+                content += '<button class="btn" onclick="checkAnswer(10,\'瑞士雞翼\')">提交答案</button>';
                 content += '<button class="btn btn-warning" onclick="showHint(10)">💡 提示 (<span id="hint-count-10">0</span>/3)</button>';
                 content += '</div>';
                 content += '<div class="selfie-box">';
@@ -780,10 +797,10 @@
                 isCorrect = true;
             }
             // 針對特定題目的寬鬆比對
-            if (locationNum === 2 && userAnswer === '貝聿銘') {
+            if (locationNum === 1 && (userAnswer === '絲襪奶茶' || userAnswer === '鴛鴦')) {
                 isCorrect = true;
             }
-            if (locationNum === 6 && (userAnswer === '九廣鐵路鐘樓' || userAnswer === '鐘樓')) {
+            if (locationNum === 4 && userAnswer === '譚詠麟') {
                 isCorrect = true;
             }
 
@@ -802,54 +819,54 @@
             
             var hints = {
                 1: {
-                    1: '提示：答案就在問題中！留意「衙門」這個詞。', 
-                    2: '提示：清代衙門的重要建築結構就是「衙門」本身。', 
-                    3: '答案：衙門'
+                    1: '提示：這兩種飲品都是香港茶餐廳的標誌性飲品。', 
+                    2: '提示：一種是用絲襪沖泡的奶茶，另一種是咖啡和奶茶的混合。', 
+                    3: '答案：絲襪奶茶和鴛鴦'
                 },
                 2: {
-                    1: '提示：這位建築師也設計了巴黎羅浮宮玻璃金字塔。', 
-                    2: '提示：他是美籍華裔建築師，姓貝。', 
-                    3: '答案：貝聿銘'
+                    1: '提示：這是一種早餐常見的菜式。', 
+                    2: '提示：包含炒蛋和烤麵包。', 
+                    3: '答案：炒蛋多士'
                 },
                 3: {
-                    1: '提示：這位總督的中文名字有兩個字。', 
-                    2: '提示：他是香港第四任總督。', 
-                    3: '答案：寶寧'
+                    1: '提示：這是一種甜味的包點。', 
+                    2: '提示：包含奶油和豬仔形狀的麵包。', 
+                    3: '答案：奶油豬仔包'
                 },
                 4: {
-                    1: '提示：這位神仙的名字有三個字。', 
-                    2: '提示：他是一位道教神仙，姓黃。', 
-                    3: '答案：黃初平'
+                    1: '提示：這位名人在香港樂壇有很高地位。', 
+                    2: '提示：他是香港樂壇的"校長"。', 
+                    3: '答案：校長'
                 },
                 5: {
-                    1: '提示：這位總督的中文名字有三個字。', 
-                    2: '提示：他是香港首任總督。', 
-                    3: '答案：砵典乍'
+                    1: '提示：這個地區以賽馬聞名。', 
+                    2: '提示：位於香港島，灣仔旁邊。', 
+                    3: '答案：跑馬地'
                 },
                 6: {
-                    1: '提示：這個建築與鐵路有關。', 
-                    2: '提示：它是一個鐘樓建築。', 
-                    3: '答案：九廣鐵路鐘樓'
+                    1: '提示：這種設計元素是彩色的。', 
+                    2: '提示：通常用於窗戶裝飾。', 
+                    3: '答案：彩色玻璃窗'
                 },
                 7: {
-                    1: '提示：這是一個四位數字的年份。', 
-                    2: '提示：這個年份在19世紀。', 
-                    3: '答案：1888'
+                    1: '提示：這是一種甜味包點。', 
+                    2: '提示：包含菠蘿形狀的酥皮和牛油。', 
+                    3: '答案：菠蘿油'
                 },
                 8: {
-                    1: '提示：這位明星是功夫電影的傳奇人物。', 
-                    2: '提示：他的英文名字是Bruce Lee。', 
-                    3: '答案：李小龍'
+                    1: '提示：這種飲品用玻璃瓶盛載。', 
+                    2: '提示：是香港特色的奶茶。', 
+                    3: '答案：樽仔奶茶'
                 },
                 9: {
-                    1: '提示：這是一座供奉海神的廟宇。', 
-                    2: '提示：這座廟宇供奉的是媽祖。', 
-                    3: '答案：天后廟'
+                    1: '提示：這是一種傳統製麵技藝。', 
+                    2: '提示：使用竹竿壓制麵團。', 
+                    3: '答案：竹昇打面'
                 },
                 10: {
-                    1: '提示：這是一個四位數字的年份。', 
-                    2: '提示：這個年份在21世紀初。', 
-                    3: '答案：2003'
+                    1: '提示：這是一種雞翼菜式。', 
+                    2: '提示：以甜醬油烹調。', 
+                    3: '答案：瑞士雞翼'
                 }
             };
             
@@ -867,44 +884,44 @@
         function showVideo(locationNum, type) {
             var videoInfo = {
                 1: {
-                    history: {title: '九龍寨城歷史', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '九龍寨城故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '蘭芳園歷史', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '絲襪奶茶創始故事', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 2: {
-                    history: {title: '中環金融區發展', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '中環故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '澳洲牛奶公司', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '炒蛋多士傳奇', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 3: {
-                    history: {title: '禮賓府歷史', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '禮賓府故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '翠華餐廳發展史', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '奶油豬仔包故事', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 4: {
-                    history: {title: '黃大仙祠文化', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '黃大仙祠故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '華星冰室與明星', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '校長多士由來', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 5: {
-                    history: {title: '石板街歷史', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '石板街故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '祥興咖啡室', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '傳統冰室文化', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 6: {
-                    history: {title: '香港文化中心', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '文化中心故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '美都餐室懷舊', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '電影取景地故事', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 7: {
-                    history: {title: '太平山頂歷史', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '太平山頂故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '金華冰廳', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '菠蘿油傳奇', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 8: {
-                    history: {title: '星光大道與香港電影', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '星光大道故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '瑞記咖啡', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '樽仔奶茶特色', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 9: {
-                    history: {title: '廟街夜市文化', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '廟街夜市故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '永華面家', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '竹昇打面技藝', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 10: {
-                    history: {title: '國際金融中心', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: 'IFC故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '太平館餐廳', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '瑞士雞翼由來', youtubeId: 'dQw4w9WgXcQ'}
                 }
             };
             
@@ -927,10 +944,10 @@
             
             var completionHTML = '<div id="completion" class="completion">';
             completionHTML += '<h2>🎉 恭喜您完成所有探索！</h2>';
-            completionHTML += '<p>您已成功完成香港10個歷史與特色地點的探索！</p>';
+            completionHTML += '<p>您已成功完成香港10間經典茶餐廳的探索！</p>';
             completionHTML += '<div class="qr-code">';
             completionHTML += '<h3>完成獎勵二維碼</h3>';
-            completionHTML += '<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=香港歷史特色探索完成&format=png&margin=0" alt="完成獎勵">';
+            completionHTML += '<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=香港茶餐廳探索完成&format=png&margin=0" alt="完成獎勵">';
             completionHTML += '<p class="qr-instruction">掃描此二維碼可獲得數字代碼</p>';
             completionHTML += '</div>';
             completionHTML += '<div class="selfie-box">';
@@ -975,7 +992,7 @@
             ctx.font = 'bold 48px Arial';
             ctx.textAlign = 'center';
             
-            var site = locationNum === 0 ? '香港歷史特色探索' : getLocationName(locationNum);
+            var site = locationNum === 0 ? '香港茶餐廳探索' : getLocationName(locationNum);
             ctx.fillText('我已完成【' + site + '】任務！', 300, 300);
             
             // 繪製簡單的相機圖標
@@ -1000,16 +1017,16 @@
         // 獲取地點名稱
         function getLocationName(locationNum) {
             var locations = {
-                1: '九龍寨城公園',
-                2: '中環金融區',
-                3: '香港禮賓府',
-                4: '黃大仙祠',
-                5: '石板街',
-                6: '香港文化中心',
-                7: '太平山頂',
-                8: '星光大道',
-                9: '廟街夜市',
-                10: '國際金融中心'
+                1: '蘭芳園',
+                2: '澳洲牛奶公司',
+                3: '翠華餐廳',
+                4: '華星冰室',
+                5: '祥興咖啡室',
+                6: '美都餐室',
+                7: '金華冰廳',
+                8: '瑞記咖啡',
+                9: '永華面家',
+                10: '太平館餐廳'
             };
             return locations[locationNum] || '未知地點';
         }
