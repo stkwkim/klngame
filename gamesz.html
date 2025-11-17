@@ -1,30 +1,25 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>深圳城市探索 - 改革之路</title>
+    <title>九龍城土瓜灣探索</title>
     <style>
-        :root {
-            --primary: #0078d7;
-            --secondary: #00a4ef;
-            --success: #107c10;
-            --warning: #ffb900;
-            --danger: #d13438;
-            --info: #8661c5;
-            --light: #f8f9fa;
-            --dark: #323130;
-        }
-        
+        /* 基本樣式 */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -32,6 +27,7 @@
             padding: 1rem;
             color: #fff;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
@@ -43,13 +39,14 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
             padding: 1.5rem;
             margin: 1rem;
+            position: relative;
         }
         
         h1 {
             text-align: center;
             margin: 0 0 1.5rem 0;
             font-size: 1.75rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -70,23 +67,15 @@
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--success), #20c997);
+            background: linear-gradient(90deg, #28a745, #20c997);
             width: 0%;
             transition: width 0.5s ease;
         }
         
-        .progress-text {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 0.25rem;
-            font-size: 0.75rem;
-            color: #666;
-        }
-        
         .location-card {
-            background: var(--light);
+            background: #f8f9fa;
             padding: 1.25rem;
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid #667eea;
             border-radius: 8px;
             margin-bottom: 1rem;
             transition: transform 0.3s ease;
@@ -100,7 +89,7 @@
         .location-card h2 {
             font-size: 1.25rem;
             margin-bottom: 0.75rem;
-            color: var(--dark);
+            color: #343a40;
             display: flex;
             align-items: center;
         }
@@ -115,7 +104,7 @@
         }
         
         .btn {
-            background: var(--primary);
+            background: #667eea;
             color: #fff;
             border: none;
             padding: 0.5rem 0.75rem;
@@ -130,31 +119,25 @@
         }
         
         .btn:hover {
-            background: #0066b4;
+            background: #5a6fd8;
             transform: translateY(-1px);
         }
         
         .btn-success {
-            background: var(--success);
+            background: #28a745;
         }
         
         .btn-warning {
-            background: var(--warning);
+            background: #ffc107;
             color: #000;
         }
         
         .btn-danger {
-            background: var(--danger);
+            background: #dc3545;
         }
         
         .btn-info {
-            background: var(--info);
-        }
-        
-        .btn:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
+            background: #17a2b8;
         }
         
         input {
@@ -168,7 +151,7 @@
         }
         
         input:focus {
-            border-color: var(--primary);
+            border-color: #667eea;
             outline: none;
         }
         
@@ -211,12 +194,6 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
-        .qr-instruction {
-            font-size: 0.75rem;
-            color: #555;
-            margin-top: 0.5rem;
-        }
-        
         .modal {
             position: fixed;
             top: 0;
@@ -243,7 +220,7 @@
         
         .modal h2 {
             margin-bottom: 1rem;
-            color: var(--dark);
+            color: #343a40;
         }
         
         .modal-close {
@@ -259,7 +236,7 @@
         
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             margin: 1rem 0;
@@ -273,15 +250,6 @@
             height: 100%;
             border: none;
             border-radius: 8px;
-        }
-        
-        .hint-container {
-            background: #fff9e6;
-            border-left: 4px solid var(--warning);
-            padding: 1rem;
-            border-radius: 6px;
-            margin: 1rem 0;
-            font-size: 0.875rem;
         }
         
         .poem-mask {
@@ -310,11 +278,6 @@
             backdrop-filter: blur(5px);
         }
         
-        .poem-content p {
-            margin-bottom: 1.5rem;
-            letter-spacing: 1px;
-        }
-        
         .gps-prompt {
             position: fixed;
             bottom: 20px;
@@ -334,13 +297,6 @@
         
         .gps-prompt button {
             margin: 0 4px;
-        }
-        
-        .no-select {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
         }
         
         @media (max-width: 600px) {
@@ -370,207 +326,186 @@
                 padding: 1rem;
             }
         }
+        
+        /* 保護樣式 */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .no-context {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* 浮水印 */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.03);
+            z-index: -1;
+            pointer-events: none;
+            white-space: nowrap;
+            font-weight: bold;
+        }
     </style>
 </head>
-<body class="no-select">
+<body class="no-select no-context" oncontextmenu="return false;">
+    <div class="watermark">九龍城土瓜灣探索</div>
+    
     <div class="container">
-        <h1>🏙️ 深圳城市探索 - 改革之路</h1>
+        <h1>🏛️ 九龍城土瓜灣探索</h1>
         
         <div class="progress-container">
-            <div>探索进度：<span id="progress-count">0</span> / 6</div>
+            <div>探索進度：<span id="progress-count">0</span> / 6</div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill"></div>
             </div>
             <div class="progress-text">
                 <span>已完成：<span id="progress-percent">0</span>%</span>
-                <span>剩余：<span id="remaining-percent">100</span>%</span>
+                <span>剩餘：<span id="remaining-percent">100</span>%</span>
             </div>
         </div>
 
-        <!-- 题目1 -->
-        <div id="location-1" class="location-card">
-            <h2>📍 深圳博物馆<span id="dist-1" class="distance-badge">计算中…</span></h2>
-            <p><strong>故事：</strong>深圳博物馆是了解深圳从边陲小镇到现代化大都市变迁的最佳场所，记录着改革开放的历史足迹。</p>
-            <div class="button-group">
-                <button class="btn btn-danger" onclick="showVideo(1,'history')">🎬 历史影片</button>
-                <button class="btn btn-info" onclick="showVideo(1,'story')">📖 故事进度</button>
-            </div>
-            <p><strong>问题：</strong>深圳博物馆新馆位于深圳的哪个行政区？</p>
-            <input type="text" id="answer-1" placeholder="输入您的答案">
-            <div class="button-group">
-                <button class="btn" onclick="checkAnswer(1,'福田区')">提交答案</button>
-                <button class="btn btn-warning" onclick="showHint(1)">💡 提示 (<span id="hint-count-1">0</span>/3)</button>
-            </div>
-            <div class="selfie-box">
-                <button class="btn btn-success" onclick="takeSelfie(1)">📸 自拍分享</button>
-                <canvas id="canvas-1" class="selfie-canvas" width="600" height="600"></canvas>
-                <img id="selfie-1" class="selfie-img" style="display:none;">
-            </div>
-        </div>
-
-        <!-- 题目2 -->
-        <div id="location-2" class="location-card" style="display:none">
-            <h2>🏢 华强北电子市场<span id="dist-2" class="distance-badge">计算中…</span></h2>
-            <p><strong>故事：</strong>华强北被称为"中国电子第一街"，是深圳电子产业发展的缩影，见证了深圳从制造到创造的转变。</p>
-            <div class="button-group">
-                <button class="btn btn-danger" onclick="showVideo(2,'history')">🎬 历史影片</button>
-                <button class="btn btn-info" onclick="showVideo(2,'story')">📖 故事进度</button>
-            </div>
-            <p><strong>问题：</strong>华强北电子市场最初以什么电子产品闻名全国？</p>
-            <input type="text" id="answer-2" placeholder="输入您的答案">
-            <div class="button-group">
-                <button class="btn" onclick="checkAnswer(2,'手机')">提交答案</button>
-                <button class="btn btn-warning" onclick="showHint(2)">💡 提示 (<span id="hint-count-2">0</span>/3)</button>
-            </div>
-            <div class="selfie-box">
-                <button class="btn btn-success" onclick="takeSelfie(2)">📸 自拍分享</button>
-                <canvas id="canvas-2" class="selfie-canvas" width="600" height="600"></canvas>
-                <img id="selfie-2" class="selfie-img" style="display:none;">
-            </div>
-        </div>
-
-        <!-- 题目3 -->
-        <div id="location-3" class="location-card" style="display:none">
-            <h2>🏞️ 莲花山公园<span id="dist-3" class="distance-badge">计算中…</span></h2>
-            <p><strong>故事：</strong>莲花山公园是深圳中心区的重要绿地，山顶的邓小平铜像象征着深圳的改革开放精神。</p>
-            <div class="button-group">
-                <button class="btn btn-danger" onclick="showVideo(3,'history')">🎬 历史影片</button>
-                <button class="btn btn-info" onclick="showVideo(3,'story')">📖 故事进度</button>
-            </div>
-            <p><strong>问题：</strong>莲花山公园山顶的邓小平铜像面向哪个方向？</p>
-            <input type="text" id="answer-3" placeholder="输入您的答案">
-            <div class="button-group">
-                <button class="btn" onclick="checkAnswer(3,'南方')">提交答案</button>
-                <button class="btn btn-warning" onclick="showHint(3)">💡 提示 (<span id="hint-count-3">0</span>/3)</button>
-            </div>
-            <div class="selfie-box">
-                <button class="btn btn-success" onclick="takeSelfie(3)">📸 自拍分享</button>
-                <canvas id="canvas-3" class="selfie-canvas" width="600" height="600"></canvas>
-                <img id="selfie-3" class="selfie-img" style="display:none;">
-            </div>
-        </div>
-
-        <!-- 题目4 -->
-        <div id="location-4" class="location-card" style="display:none">
-            <h2>🏛️ 深圳市委大院及孺子牛雕塑<span id="dist-4" class="distance-badge">计算中…</span></h2>
-            <p><strong>故事：</strong>孺子牛雕塑是深圳精神的象征，体现了深圳人开拓进取、务实肯干的精神风貌。</p>
-            <div class="button-group">
-                <button class="btn btn-danger" onclick="showVideo(4,'history')">🎬 历史影片</button>
-                <button class="btn btn-info" onclick="showVideo(4,'story')">📖 故事进度</button>
-            </div>
-            <p><strong>问题：</strong>孺子牛雕塑又常被称为什么牛？</p>
-            <input type="text" id="answer-4" placeholder="输入您的答案">
-            <div class="button-group">
-                <button class="btn" onclick="checkAnswer(4,'拓荒牛')">提交答案</button>
-                <button class="btn btn-warning" onclick="showHint(4)">💡 提示 (<span id="hint-count-4">0</span>/3)</button>
-            </div>
-            <div class="selfie-box">
-                <button class="btn btn-success" onclick="takeSelfie(4)">📸 自拍分享</button>
-                <canvas id="canvas-4" class="selfie-canvas" width="600" height="600"></canvas>
-                <img id="selfie-4" class="selfie-img" style="display:none;">
-            </div>
-        </div>
-
-        <!-- 题目5 -->
-        <div id="location-5" class="location-card" style="display:none">
-            <h2>🌉 深圳湾大桥<span id="dist-5" class="distance-badge">计算中…</span></h2>
-            <p><strong>故事：</strong>深圳湾大桥是连接深圳与香港的重要通道，象征着深港合作的紧密关系。</p>
-            <div class="button-group">
-                <button class="btn btn-danger" onclick="showVideo(5,'history')">🎬 历史影片</button>
-                <button class="btn btn-info" onclick="showVideo(5,'story')">📖 故事进度</button>
-            </div>
-            <p><strong>问题：</strong>深圳湾大桥连接深圳和香港的哪个地区？</p>
-            <input type="text" id="answer-5" placeholder="输入您的答案">
-            <div class="button-group">
-                <button class="btn" onclick="checkAnswer(5,'元朗')">提交答案</button>
-                <button class="btn btn-warning" onclick="showHint(5)">💡 提示 (<span id="hint-count-5">0</span>/3)</button>
-            </div>
-            <div class="selfie-box">
-                <button class="btn btn-success" onclick="takeSelfie(5)">📸 自拍分享</button>
-                <canvas id="canvas-5" class="selfie-canvas" width="600" height="600"></canvas>
-                <img id="selfie-5" class="selfie-img" style="display:none;">
-            </div>
-        </div>
-
-        <!-- 题目6 -->
-        <div id="location-6" class="location-card" style="display:none">
-            <h2>🏗️ 前海深港现代服务业合作区<span id="dist-6" class="distance-badge">计算中…</span></h2>
-            <p><strong>故事：</strong>前海是新时代改革开放的试验田，致力于打造粤港澳大湾区现代服务业体制机制创新区。</p>
-            <div class="button-group">
-                <button class="btn btn-danger" onclick="showVideo(6,'history')">🎬 历史影片</button>
-                <button class="btn btn-info" onclick="showVideo(6,'story')">📖 故事进度</button>
-            </div>
-            <p><strong>问题：</strong>前海合作区重点发展哪类产业？</p>
-            <input type="text" id="answer-6" placeholder="输入您的答案">
-            <div class="button-group">
-                <button class="btn" onclick="checkAnswer(6,'现代服务业')">提交答案</button>
-                <button class="btn btn-warning" onclick="showHint(6)">💡 提示 (<span id="hint-count-6">0</span>/3)</button>
-            </div>
-            <div class="selfie-box">
-                <button class="btn btn-success" onclick="takeSelfie(6)">📸 自拍分享</button>
-                <canvas id="canvas-6" class="selfie-canvas" width="600" height="600"></canvas>
-                <img id="selfie-6" class="selfie-img" style="display:none;">
-            </div>
-        </div>
-
-        <!-- 完成页 -->
-        <div id="completion" class="completion" style="display:none;">
-            <h2>🎉 恭喜您完成所有探索！</h2>
-            <p>您已成功完成深圳城市探索的 6 个历史与地标地点！</p>
-            <div class="qr-code">
-                <h3>完成奖励二维码</h3>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=深圳城市探索完成&format=png&margin=0" alt="完成奖励">
-                <p class="qr-instruction">扫描此二维码可获得数字代码</p>
-            </div>
-            <div class="selfie-box">
-                <button class="btn btn-success" onclick="takeSelfie(0)">📸 自拍分享完成任务</button>
-                <canvas id="canvas-0" class="selfie-canvas" width="600" height="600"></canvas>
-                <img id="selfie-0" class="selfie-img" style="display:none;">
-            </div>
-            <button class="btn btn-success" onclick="resetGame()">重新开始游戏</button>
-        </div>
+        <!-- 內容將由JavaScript動態載入 -->
+        <div id="game-content"></div>
     </div>
 
-    <!-- 影片模态框 -->
+    <!-- 影片模態框 -->
     <div id="video-modal" class="modal" style="display:none;">
         <button class="modal-close" onclick="closeVideo()">&times;</button>
         <div class="modal-content">
-            <h2 id="video-title">影片标题</h2>
+            <h2 id="video-title">影片標題</h2>
             <p id="video-description">影片描述</p>
             <div class="video-container">
                 <iframe id="video-player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <p style="font-size:0.75rem;color:#555;margin-top:0.5rem;">在AR版本中，这段影片会在您到达地点时自动播放，并与实景结合</p>
+            <p style="font-size:0.75rem;color:#555;margin-top:0.5rem;">在AR版本中，這段影片會在您到達地點時自動播放，並與實景結合</p>
         </div>
     </div>
 
     <!-- GPS 提示 -->
     <div id="gpsPrompt" class="gps-prompt">
-        <div>📍 你已到达 <strong id="promptPoiName"></strong>！</div>
+        <div>📍 你已到達 <strong id="promptPoiName"></strong>！</div>
         <div style="margin-top:8px">
-            <button class="btn btn-info" onclick="playSelected('story')">播放故事进度</button>
-            <button class="btn btn-danger" onclick="playSelected('hist')">播放历史片段</button>
-            <button class="btn" onclick="closePrompt()">稍后再说</button>
+            <button class="btn btn-info" onclick="playSelected('story')">播放故事進度</button>
+            <button class="btn btn-danger" onclick="playSelected('hist')">播放歷史片段</button>
+            <button class="btn" onclick="closePrompt()">稍後再說</button>
         </div>
     </div>
 
     <script>
-        // 游戏状态
+        // 代碼保護措施
+        (function() {
+            'use strict';
+            
+            // 禁用右鍵菜單
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁用文本選擇
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁用拖拽
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁用複製、剪切、粘貼
+            document.addEventListener('copy', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            document.addEventListener('cut', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            document.addEventListener('paste', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 檢測開發者工具
+            function detectDevTools() {
+                var threshold = 160;
+                var widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                var heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                
+                if (widthThreshold || heightThreshold) {
+                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#333;color:white;font-size:24px;">🚫 禁止使用開發者工具</div>';
+                }
+            }
+            
+            setInterval(detectDevTools, 1000);
+            
+            // 在控制台顯示警告
+            console.log('%c🚫 請勿複製此代碼', 'color: red; font-size: 20px; font-weight: bold;');
+            console.log('%c此應用程式代碼受版權保護', 'color: orange; font-size: 16px;');
+        })();
+
+        // 遊戲狀態
         var currentLocation = 1;
         var totalLocations = 6;
         var hintCounters = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0};
         var completedLocations = new Set();
 
-        // 下一地点诗意提示
+        // 下一地點詩意提示
         var nextPoem = {
-            2: '从历史的沉淀走向科技的脉搏，下一站是电子产业的传奇之地。',
-            3: '科技与自然交汇，下一站将带你登高望远，俯瞰深圳的城市脉络。',
-            4: '城市之巅俯瞰后，让我们走近象征深圳精神的标志性雕塑。',
-            5: '感受深圳精神后，下一站将带你跨越深港，见证两地合作的桥梁。',
-            6: '从连接两地的桥梁，走向未来发展的试验田，完成你的深圳探索之旅。'
+            2: '磚瓦疊疊，歲月斑斑；下一頁，騎樓將把舊夢翻響。',
+            3: '鐵閘背後，曾經牛聲低迴；紅磚待你，續寫藝術新章。',
+            4: '海風輕拂，魚尾石仍守望；浪花要把下一段故事交到你手上。',
+            5: '宋室遺痕，苔蘚生香；踏過石刻，再聽一段皇室風霜。',
+            6: '香火繚繞，觀音低眉；廟簷下的風鈴，正為你作響。'
         };
 
-        // 更新进度条
+        // 動態載入遊戲內容
+        function loadGameContent() {
+            var content = '';
+            
+            // 題目1
+            content += '<div id="location-1" class="location-card">';
+            content += '<h2>📍 九龍寨城公園<span id="dist-1" class="distance-badge">計算中…</span></h2>';
+            content += '<p><strong>故事：</strong>這裡曾是充滿傳奇的九龍寨城，一個在三不管地帶中自然形成的獨特社區。</p>';
+            content += '<div class="button-group">';
+            content += '<button class="btn btn-danger" onclick="showVideo(1,\'history\')">🎬 歷史影片</button>';
+            content += '<button class="btn btn-info" onclick="showVideo(1,\'story\')">📖 故事進度</button>';
+            content += '</div>';
+            content += '<p><strong>問題：</strong>九龍寨城公園保留了清代衙門的哪個重要建築結構？</p>';
+            content += '<input type="text" id="answer-1" placeholder="輸入您的答案">';
+            content += '<div class="button-group">';
+            content += '<button class="btn" onclick="checkAnswer(1,\'衙門\')">提交答案</button>';
+            content += '<button class="btn btn-warning" onclick="showHint(1)">💡 提示 (<span id="hint-count-1">0</span>/3)</button>';
+            content += '</div>';
+            content += '<div class="selfie-box">';
+            content += '<button class="btn btn-success" onclick="takeSelfie(1)">📸 自拍分享</button>';
+            content += '<canvas id="canvas-1" class="selfie-canvas" width="600" height="600"></canvas>';
+            content += '<img id="selfie-1" class="selfie-img" style="display:none;">';
+            content += '</div>';
+            content += '</div>';
+            
+            // 其他題目將根據進度動態載入
+            
+            document.getElementById('game-content').innerHTML = content;
+        }
+
+        // 更新進度條
         function updateProgress() {
             var completed = completedLocations.size;
             var pc = Math.min((completed / totalLocations) * 100, 100);
@@ -581,7 +516,7 @@
             document.getElementById('progress-fill').style.width = pc + '%';
         }
 
-        // 显示诗意提示并前往下一地点
+        // 顯示詩意提示並前往下一地點
         function showPoemThenNext() {
             document.getElementById('location-' + currentLocation).style.display = 'none';
             completedLocations.add(currentLocation);
@@ -593,12 +528,12 @@
             wrap.innerHTML = 
                 '<div class="poem-content">' +
                     '<p>' + (nextPoem[currentLocation + 1] || '') + '</p>' +
-                    '<button class="btn btn-success" onclick="goNextLocation()">探索下个地点</button>' +
+                    '<button class="btn btn-success" onclick="goNextLocation()">探索下個地點</button>' +
                 '</div>';
             document.body.appendChild(wrap);
         }
 
-        // 前往下一地点
+        // 前往下一地點
         function goNextLocation() {
             var mask = document.getElementById('poem-mask');
             if (mask) mask.remove();
@@ -606,70 +541,101 @@
             currentLocation++;
             
             if (currentLocation <= totalLocations) {
-                document.getElementById('location-' + currentLocation).style.display = 'block';
+                // 動態載入下一個地點
+                loadLocation(currentLocation);
             } else {
                 completeGame();
             }
         }
 
-        // 检查答案
+        // 動態載入地點
+        function loadLocation(locationNum) {
+            var content = '';
+            
+            if (locationNum === 2) {
+                content += '<div id="location-2" class="location-card">';
+                content += '<h2>🏢 十三街舊樓群<span id="dist-2" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>十三街見證了土瓜灣的工業發展史，戰前騎樓融合中西風格。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(2,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(2,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>十三街的騎樓建築主要建於哪個年代？（四位數字）</p>';
+                content += '<input type="text" id="answer-2" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(2,\'1950\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(2)">💡 提示 (<span id="hint-count-2">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(2)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-2" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-2" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            // 其他地點的HTML代碼可以在這裡添加
+            
+            document.getElementById('game-content').innerHTML = content;
+        }
+
+        // 檢查答案
         function checkAnswer(locationNum, correctAnswer) {
             var userAnswer = document.getElementById('answer-' + locationNum).value.trim().toLowerCase();
             var correct = correctAnswer.toLowerCase();
             var isCorrect = false;
             
-            // 严格比对逻辑
+            // 嚴格比對邏輯
             if (userAnswer === correct) {
                 isCorrect = true;
             }
-            // 针对特定题目的宽松比对
-            if (locationNum === 2 && (userAnswer === '智能手机' || userAnswer === '电子')) {
+            // 針對特定題目的寬鬆比對
+            if (locationNum === 2 && (userAnswer === '50年代' || userAnswer === '五十年代')) {
                 isCorrect = true;
             }
 
             if (isCorrect) {
                 document.getElementById('answer-' + locationNum).value = '';
-                showPoemThenNext(); // 只有正确才显示诗句
+                showPoemThenNext(); // 只有正確才顯示詩句
             } else {
-                alert('❌ 答案不正确，请再试一次或查看提示。');
+                alert('❌ 答案不正確，請再試一次或查看提示。');
             }
         }
 
-        // 显示提示
+        // 顯示提示
         function showHint(locationNum) {
             hintCounters[locationNum]++;
             document.getElementById('hint-count-' + locationNum).textContent = hintCounters[locationNum];
             
             var hints = {
                 1: {
-                    1: '提示：这个行政区是深圳的中心城区之一。', 
-                    2: '提示：市民中心、会展中心都在这个区。', 
-                    3: '答案：福田区'
+                    1: '提示：答案就在問題中！留意「衙門」這個詞。', 
+                    2: '提示：清代衙門的重要建築結構就是「衙門」本身。', 
+                    3: '答案：衙門'
                 },
                 2: {
-                    1: '提示：这是一种人人都在使用的通讯设备。', 
-                    2: '提示：华强北以销售和组装这种设备闻名。', 
-                    3: '答案：手机'
+                    1: '提示：想想香港戰後重建的時期，答案是四位數字。', 
+                    2: '提示：1950年代是香港戰後重建的重要時期。', 
+                    3: '答案：1950'
                 },
                 3: {
-                    1: '提示：这个方向与中国改革开放的方向一致。', 
-                    2: '提示：邓小平铜像面向香港的方向。', 
-                    3: '答案：南方'
+                    1: '提示：這個地方原本的用途與「牛」有關，答案是三個字。', 
+                    2: '提示：這裡原本是處理牛隻的地方。', 
+                    3: '答案：屠宰場'
                 },
                 4: {
-                    1: '提示：这个雕塑象征着深圳开拓进取的精神。', 
-                    2: '提示：这种动物象征着勤劳和开拓。', 
-                    3: '答案：拓荒牛'
+                    1: '提示：答案就在問題中！是一種與海洋生物有關的石頭。', 
+                    2: '提示：這種石頭形狀像魚的尾巴。', 
+                    3: '答案：魚尾石'
                 },
                 5: {
-                    1: '提示：这是香港的一个地区。', 
-                    2: '提示：这个地区位于新界西北部。', 
-                    3: '答案：元朗'
+                    1: '提示：想想中國歷史中南北宋的時期，答案是兩個字。', 
+                    2: '提示：南宋是宋朝的後期階段。', 
+                    3: '答案：南宋'
                 },
                 6: {
-                    1: '提示：这是一种非制造业的产业类型。', 
-                    2: '提示：包括金融、物流、信息服务等。', 
-                    3: '答案：现代服务业'
+                    1: '提示：答案就在廟宇名稱中！', 
+                    2: '提示：觀音廟主要供奉的就是觀音菩薩。', 
+                    3: '答案：觀音'
                 }
             };
             
@@ -683,32 +649,32 @@
             }
         }
 
-        // 显示影片
+        // 顯示影片
         function showVideo(locationNum, type) {
             var videoInfo = {
                 1: {
-                    history: {title: '深圳博物馆历史', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '深圳改革开放故事', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '九龍寨城歷史', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '九龍寨城故事進度', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 2: {
-                    history: {title: '华强北发展史', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '中国电子第一街', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '十三街舊樓群故事', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '十三街發展故事', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 3: {
-                    history: {title: '莲花山与邓小平', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '深圳城市中轴线', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '牛棚藝術村轉型', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '牛棚藝術村故事', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 4: {
-                    history: {title: '孺子牛雕塑故事', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '深圳精神象征', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '海心公園與魚尾石傳說', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '海心公園故事', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 5: {
-                    history: {title: '深圳湾大桥建设', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '深港合作桥梁', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '宋皇臺歷史遺跡', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '宋皇臺故事', youtubeId: 'dQw4w9WgXcQ'}
                 },
                 6: {
-                    history: {title: '前海合作区规划', youtubeId: 'dQw4w9WgXcQ'}, 
-                    story: {title: '新时代改革开放', youtubeId: 'dQw4w9WgXcQ'}
+                    history: {title: '紅磡觀音廟文化', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '紅磡觀音廟故事', youtubeId: 'dQw4w9WgXcQ'}
                 }
             };
             
@@ -719,105 +685,111 @@
             document.getElementById('video-modal').style.display = 'flex';
         }
 
-        // 关闭影片
+        // 關閉影片
         function closeVideo() {
             document.getElementById('video-modal').style.display = 'none';
             document.getElementById('video-player').src = '';
         }
 
-        // 完成游戏
+        // 完成遊戲
         function completeGame() {
-            for (var i = 1; i <= totalLocations; i++) {
-                document.getElementById('location-' + i).style.display = 'none';
-            }
-            document.getElementById('completion').style.display = 'block';
+            document.getElementById('game-content').innerHTML = '';
+            
+            var completionHTML = '<div id="completion" class="completion">';
+            completionHTML += '<h2>🎉 恭喜您完成所有探索！</h2>';
+            completionHTML += '<p>您已成功完成九龍城土瓜灣的 6 個歷史地點探索！</p>';
+            completionHTML += '<div class="qr-code">';
+            completionHTML += '<h3>完成獎勵二維碼</h3>';
+            completionHTML += '<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=九龍城土瓜灣探索完成&format=png&margin=0" alt="完成獎勵">';
+            completionHTML += '<p class="qr-instruction">掃描此二維碼可獲得數字代碼</p>';
+            completionHTML += '</div>';
+            completionHTML += '<div class="selfie-box">';
+            completionHTML += '<button class="btn btn-success" onclick="takeSelfie(0)">📸 自拍分享完成任務</button>';
+            completionHTML += '<canvas id="canvas-0" class="selfie-canvas" width="600" height="600"></canvas>';
+            completionHTML += '<img id="selfie-0" class="selfie-img" style="display:none;">';
+            completionHTML += '</div>';
+            completionHTML += '<button class="btn btn-success" onclick="resetGame()">重新開始遊戲</button>';
+            completionHTML += '</div>';
+            
+            document.getElementById('game-content').innerHTML = completionHTML;
             updateProgress();
         }
 
-        // 重置游戏
+        // 重置遊戲
         function resetGame() {
-            for (var i = 2; i <= totalLocations; i++) {
-                document.getElementById('location-' + i).style.display = 'none';
-            }
-            document.getElementById('completion').style.display = 'none';
-            document.getElementById('location-1').style.display = 'block';
-            
             currentLocation = 1;
             completedLocations.clear();
+            hintCounters = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0};
+            loadGameContent();
             updateProgress();
-            
-            for (var i = 1; i <= totalLocations; i++) {
-                document.getElementById('answer-' + i).value = '';
-                hintCounters[i] = 0;
-                document.getElementById('hint-count-' + i).textContent = '0';
-            }
         }
 
         // 初始化
         window.addEventListener('load', function() {
+            loadGameContent();
             updateProgress();
         });
 
-        // 简化的自拍功能（实际应用中应使用真实相机API）
+        // 簡化的自拍功能
         function takeSelfie(locationNum) {
             var canvas = document.getElementById('canvas-' + locationNum);
             var ctx = canvas.getContext('2d');
             var img = document.getElementById('selfie-' + locationNum);
             
-            // 绘制背景
+            // 繪製背景
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, 600, 600);
             
-            // 绘制文字
+            // 繪製文字
             ctx.fillStyle = '#000000';
             ctx.font = 'bold 48px Arial';
             ctx.textAlign = 'center';
             
-            var site = locationNum === 0 ? '深圳城市探索' : getLocationName(locationNum);
-            ctx.fillText('我已完成【' + site + '】任务！', 300, 300);
+            var site = locationNum === 0 ? '九龍城土瓜灣探索' : getLocationName(locationNum);
+            ctx.fillText('我已完成【' + site + '】任務！', 300, 300);
             
-            // 绘制简单的相机图标
+            // 繪製簡單的相機圖標
             ctx.fillStyle = '#333333';
             ctx.fillRect(250, 400, 100, 80);
             ctx.fillStyle = '#cccccc';
             ctx.fillRect(270, 420, 60, 40);
             
-            // 显示图片
+            // 顯示圖片
             var dataURL = canvas.toDataURL('image/jpeg', 0.9);
             img.src = dataURL;
             img.style.display = 'block';
             
-            // 模拟分享到微信
+            // 模擬分享到WhatsApp
             setTimeout(function() {
-                if (confirm('是否要分享到微信？')) {
-                    alert('已生成分享图片，请保存后分享到微信朋友圈');
+                if (confirm('是否要分享到 WhatsApp？')) {
+                    window.open('https://wa.me/?text=' + encodeURIComponent('我已完成【' + site + '】任務！'), '_blank');
                 }
             }, 500);
         }
 
-        // 获取地点名称
+        // 獲取地點名稱
         function getLocationName(locationNum) {
             var locations = {
-                1: '深圳博物馆',
-                2: '华强北电子市场',
-                3: '莲花山公园',
-                4: '孺子牛雕塑',
-                5: '深圳湾大桥',
-                6: '前海合作区'
+                1: '九龍寨城公園',
+                2: '十三街舊樓群',
+                3: '牛棚藝術村',
+                4: '海心公園',
+                5: '宋皇臺公園',
+                6: '紅磡觀音廟'
             };
-            return locations[locationNum] || '未知地点';
+            return locations[locationNum] || '未知地點';
         }
 
-        // 简化的GPS功能（实际应用中应使用真实GPS API）
+        // 簡化的GPS功能
         function simulateGPS() {
             var distances = [150, 320, 85, 420, 210, 180];
             
             for (var i = 1; i <= 6; i++) {
                 var badge = document.getElementById('dist-' + i);
                 if (badge) {
-                    badge.textContent = distances[i-1] + ' 米';
+                    badge.textContent = distances[i-1] + ' m';
                     
-                    // 模拟到达地点
+                    // 模擬到達地點
                     if (distances[i-1] < 200 && !completedLocations.has(i)) {
                         showGPSPrompt(i);
                     }
@@ -825,7 +797,7 @@
             }
         }
 
-        // 显示GPS提示
+        // 顯示GPS提示
         function showGPSPrompt(poiId) {
             var prompt = document.getElementById('gpsPrompt');
             var poiName = getLocationName(poiId);
@@ -834,7 +806,7 @@
             prompt.dataset.poiId = poiId;
             prompt.style.display = 'block';
             
-            // 5秒后自动隐藏
+            // 5秒後自動隱藏
             setTimeout(function() {
                 if (prompt.style.display === 'block') {
                     prompt.style.display = 'none';
@@ -842,19 +814,19 @@
             }, 5000);
         }
 
-        // 关闭GPS提示
+        // 關閉GPS提示
         function closePrompt() {
             document.getElementById('gpsPrompt').style.display = 'none';
         }
 
-        // 播放选择的影片
+        // 播放選擇的影片
         function playSelected(type) {
             var poiId = document.getElementById('gpsPrompt').dataset.poiId;
             closePrompt();
             showVideo(poiId, type === 'story' ? 'story' : 'history');
         }
 
-        // 初始化GPS模拟
+        // 初始化GPS模擬
         setInterval(simulateGPS, 3000);
     </script>
 </body>
