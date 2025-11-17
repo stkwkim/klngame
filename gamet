@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>香港歷史特色探索</title>
+    <style>
+        /* 基本樣式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #e74c3c 0%, #e67e22 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: #fff;
+            color: #333;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+            padding: 1.5rem;
+            margin: 1rem;
+            position: relative;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 0 0 1.5rem 0;
+            font-size: 1.75rem;
+            background: linear-gradient(45deg, #e74c3c, #e67e22);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .progress-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-bar {
+            height: 0.5rem;
+            background: #e9ecef;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .location-card {
+            background: #f8f9fa;
+            padding: 1.25rem;
+            border-left: 4px solid #e74c3c;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .location-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .location-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .distance-badge {
+            background: #e7f3ff;
+            color: #004085;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+        
+        .btn {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            margin: 0.25rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-1px);
+        }
+        
+        .btn-success {
+            background: #27ae60;
+        }
+        
+        .btn-warning {
+            background: #f39c12;
+            color: #000;
+        }
+        
+        .btn-danger {
+            background: #c0392b;
+        }
+        
+        .btn-info {
+            background: #3498db;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            margin: 0.5rem 0;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #e74c3c;
+            outline: none;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0.75rem 0;
+        }
+        
+        .selfie-box {
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .selfie-canvas {
+            display: none;
+        }
+        
+        .selfie-img {
+            max-width: 100%;
+            margin-top: 0.5rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .completion {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .qr-code {
+            margin: 1.5rem 0;
+        }
+        
+        .qr-code img {
+            max-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 1rem;
+        }
+        
+        .modal-content {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal h2 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        
+        .poem-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.25rem;
+            text-align: center;
+            padding: 2rem;
+            z-index: 9999;
+            line-height: 1.8;
+        }
+        
+        .poem-content {
+            max-width: 500px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .gps-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            color: #333;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            z-index: 9999;
+            display: none;
+            font-size: 0.875rem;
+            max-width: 90%;
+            width: 400px;
+        }
+        
+        .gps-prompt button {
+            margin: 0 4px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .location-card {
+                padding: 1rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+            
+            .poem-mask {
+                font-size: 1.1rem;
+                padding: 1rem;
+            }
+        }
+        
+        /* 保護樣式 */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .no-context {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* 浮水印 */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.03);
+            z-index: -1;
+            pointer-events: none;
+            white-space: nowrap;
+            font-weight: bold;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+            color: #666;
+        }
+        
+        .location-icon {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body class="no-select no-context" oncontextmenu="return false;">
+    <div class="watermark">香港歷史特色探索</div>
+    
+    <div class="container">
+        <h1>🏙️ 香港歷史特色探索</h1>
+        
+        <div class="progress-container">
+            <div>探索進度：<span id="progress-count">0</span> / 10</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text">
+                <span>已完成：<span id="progress-percent">0</span>%</span>
+                <span>剩餘：<span id="remaining-percent">100</span>%</span>
+            </div>
+        </div>
+
+        <!-- 內容將由JavaScript動態載入 -->
+        <div id="game-content"></div>
+    </div>
+
+    <!-- 影片模態框 -->
+    <div id="video-modal" class="modal" style="display:none;">
+        <button class="modal-close" onclick="closeVideo()">&times;</button>
+        <div class="modal-content">
+            <h2 id="video-title">影片標題</h2>
+            <p id="video-description">影片描述</p>
+            <div class="video-container">
+                <iframe id="video-player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p style="font-size:0.75rem;color:#555;margin-top:0.5rem;">在AR版本中，這段影片會在您到達地點時自動播放，並與實景結合</p>
+        </div>
+    </div>
+
+    <!-- GPS 提示 -->
+    <div id="gpsPrompt" class="gps-prompt">
+        <div>📍 你已到達 <strong id="promptPoiName"></strong>！</div>
+        <div style="margin-top:8px">
+            <button class="btn btn-info" onclick="playSelected('story')">播放故事進度</button>
+            <button class="btn btn-danger" onclick="playSelected('hist')">播放歷史片段</button>
+            <button class="btn" onclick="closePrompt()">稍後再說</button>
+        </div>
+    </div>
+
+    <script>
+        // 代碼保護措施
+        (function() {
+            'use strict';
+            
+            // 禁用右鍵菜單
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁用文本選擇
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁用拖拽
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁用複製、剪切、粘貼
+            document.addEventListener('copy', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            document.addEventListener('cut', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            document.addEventListener('paste', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 檢測開發者工具
+            function detectDevTools() {
+                var threshold = 160;
+                var widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                var heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                
+                if (widthThreshold || heightThreshold) {
+                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#333;color:white;font-size:24px;">🚫 禁止使用開發者工具</div>';
+                }
+            }
+            
+            setInterval(detectDevTools, 1000);
+            
+            // 在控制台顯示警告
+            console.log('%c🚫 請勿複製此代碼', 'color: red; font-size: 20px; font-weight: bold;');
+            console.log('%c此應用程式代碼受版權保護', 'color: orange; font-size: 16px;');
+        })();
+
+        // 遊戲狀態
+        var currentLocation = 1;
+        var totalLocations = 10;
+        var hintCounters = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0};
+        var completedLocations = new Set();
+
+        // 下一地點詩意提示
+        var nextPoem = {
+            2: '從九龍寨城的傳奇，走進中環的繁華，下一站將帶你感受香港的金融脈搏。',
+            3: '金融中心之後，讓我們前往香港的心臟地帶，感受殖民時期的歷史痕跡。',
+            4: '從歷史建築走向傳統文化，下一站將帶你體驗香港的信仰中心。',
+            5: '信仰之旅後，讓我們前往香港最古老的街道，感受歲月的痕跡。',
+            6: '從古老街道走向藝術殿堂，下一站將帶你欣賞香港的文化瑰寶。',
+            7: '文化洗禮後，讓我們登上太平山頂，俯瞰維港的璀璨夜景。',
+            8: '從山頂俯瞰，走向海濱漫步，下一站將帶你感受香港的自然與休閒。',
+            9: '海濱漫步後，讓我們走進香港的傳統市場，體驗地道生活。',
+            10: '從市井生活走向現代奇觀，最後一站將帶你見證香港的建築奇蹟。'
+        };
+
+        // 動態載入遊戲內容
+        function loadGameContent() {
+            var content = '';
+            
+            // 題目1 - 九龍寨城公園
+            content += '<div id="location-1" class="location-card">';
+            content += '<h2><span class="location-icon">🏯</span> 九龍寨城公園<span id="dist-1" class="distance-badge">計算中…</span></h2>';
+            content += '<p><strong>故事：</strong>這裡曾是充滿傳奇的九龍寨城，一個在三不管地帶中自然形成的獨特社區，1994年拆除後改建為公園。</p>';
+            content += '<div class="button-group">';
+            content += '<button class="btn btn-danger" onclick="showVideo(1,\'history\')">🎬 歷史影片</button>';
+            content += '<button class="btn btn-info" onclick="showVideo(1,\'story\')">📖 故事進度</button>';
+            content += '</div>';
+            content += '<p><strong>問題：</strong>九龍寨城公園保留了清代衙門的哪個重要建築結構？</p>';
+            content += '<input type="text" id="answer-1" placeholder="輸入您的答案">';
+            content += '<div class="button-group">';
+            content += '<button class="btn" onclick="checkAnswer(1,\'衙門\')">提交答案</button>';
+            content += '<button class="btn btn-warning" onclick="showHint(1)">💡 提示 (<span id="hint-count-1">0</span>/3)</button>';
+            content += '</div>';
+            content += '<div class="selfie-box">';
+            content += '<button class="btn btn-success" onclick="takeSelfie(1)">📸 自拍分享</button>';
+            content += '<canvas id="canvas-1" class="selfie-canvas" width="600" height="600"></canvas>';
+            content += '<img id="selfie-1" class="selfie-img" style="display:none;">';
+            content += '</div>';
+            content += '</div>';
+            
+            document.getElementById('game-content').innerHTML = content;
+        }
+
+        // 更新進度條
+        function updateProgress() {
+            var completed = completedLocations.size;
+            var pc = Math.min((completed / totalLocations) * 100, 100);
+            
+            document.getElementById('progress-count').textContent = completed;
+            document.getElementById('progress-percent').textContent = Math.round(pc);
+            document.getElementById('remaining-percent').textContent = Math.round(100 - pc);
+            document.getElementById('progress-fill').style.width = pc + '%';
+        }
+
+        // 顯示詩意提示並前往下一地點
+        function showPoemThenNext() {
+            document.getElementById('location-' + currentLocation).style.display = 'none';
+            completedLocations.add(currentLocation);
+            updateProgress();
+            
+            var wrap = document.createElement('div');
+            wrap.id = 'poem-mask';
+            wrap.className = 'poem-mask';
+            wrap.innerHTML = 
+                '<div class="poem-content">' +
+                    '<p>' + (nextPoem[currentLocation + 1] || '恭喜您完成所有探索！') + '</p>' +
+                    '<button class="btn btn-success" onclick="goNextLocation()">探索下個地點</button>' +
+                '</div>';
+            document.body.appendChild(wrap);
+        }
+
+        // 前往下一地點
+        function goNextLocation() {
+            var mask = document.getElementById('poem-mask');
+            if (mask) mask.remove();
+            
+            currentLocation++;
+            
+            if (currentLocation <= totalLocations) {
+                // 動態載入下一個地點
+                loadLocation(currentLocation);
+            } else {
+                completeGame();
+            }
+        }
+
+        // 動態載入地點
+        function loadLocation(locationNum) {
+            var content = '';
+            
+            if (locationNum === 2) {
+                // 題目2 - 中環
+                content += '<div id="location-2" class="location-card">';
+                content += '<h2><span class="location-icon">🏢</span> 中環金融區<span id="dist-2" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>中環是香港的商業與金融中心，匯聚了國際金融機構、高級品牌與歷史建築，見證香港從漁村到國際都會的轉變。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(2,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(2,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>中環的標誌性建築中銀大廈是由哪位著名建築師設計的？</p>';
+                content += '<input type="text" id="answer-2" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(2,\'貝聿銘\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(2)">💡 提示 (<span id="hint-count-2">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(2)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-2" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-2" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            else if (locationNum === 3) {
+                // 題目3 - 香港禮賓府
+                content += '<div id="location-3" class="location-card">';
+                content += '<h2><span class="location-icon">🏛️</span> 香港禮賓府<span id="dist-3" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>禮賓府建於1855年，曾是28位香港總督的官邸，現為香港特別行政區行政長官的官邸，見證香港150多年的歷史變遷。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(3,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(3,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>禮賓府最初是為哪位香港總督建造的官邸？</p>';
+                content += '<input type="text" id="answer-3" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(3,\'寶寧\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(3)">💡 提示 (<span id="hint-count-3">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(3)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-3" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-3" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            else if (locationNum === 4) {
+                // 題目4 - 黃大仙祠
+                content += '<div id="location-4" class="location-card">';
+                content += '<h2><span class="location-icon">🙏</span> 黃大仙祠<span id="dist-4" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>黃大仙祠是香港最著名的廟宇之一，建於1921年，供奉道教神仙黃初平，以「有求必應」聞名，是香港重要的信仰中心。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(4,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(4,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>黃大仙祠主要供奉哪位道教神仙？</p>';
+                content += '<input type="text" id="answer-4" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(4,\'黃初平\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(4)">💡 提示 (<span id="hint-count-4">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(4)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-4" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-4" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            else if (locationNum === 5) {
+                // 題目5 - 石板街
+                content += '<div id="location-5" class="location-card">';
+                content += '<h2><span class="location-icon">🛤️</span> 石板街（砵典乍街）<span id="dist-5" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>石板街是香港最古老的街道之一，建於1845年，以香港首任總督砵典乍爵士命名，石板路面與鐵皮攤檔見證香港開埠初期的歷史。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(5,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(5,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>石板街的正式名稱是以哪位香港總督命名？</p>';
+                content += '<input type="text" id="answer-5" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(5,\'砵典乍\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(5)">💡 提示 (<span id="hint-count-5">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(5)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-5" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-5" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            else if (locationNum === 6) {
+                // 題目6 - 香港文化中心
+                content += '<div id="location-6" class="location-card">';
+                content += '<h2><span class="location-icon">🎭</span> 香港文化中心<span id="dist-6" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>香港文化中心於1989年啟用，是香港重要的表演藝術場地，獨特的建築設計與尖沙咀海濱位置使其成為香港文化地標。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(6,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(6,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>香港文化中心的前身是什麼建築？</p>';
+                content += '<input type="text" id="answer-6" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(6,\'九廣鐵路鐘樓\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(6)">💡 提示 (<span id="hint-count-6">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(6)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-6" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-6" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            else if (locationNum === 7) {
+                // 題目7 - 太平山頂
+                content += '<div id="location-7" class="location-card">';
+                content += '<h2><span class="location-icon">⛰️</span> 太平山頂<span id="dist-7" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>太平山頂是香港島最高點，自19世紀起便是富豪與外籍人士的住宅區，山頂纜車與凌霄閣讓遊客可俯瞰維多利亞港與香港全景。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(7,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(7,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>太平山頂纜車於哪一年開始營運？</p>';
+                content += '<input type="text" id="answer-7" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(7,\'1888\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(7)">💡 提示 (<span id="hint-count-7">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(7)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-7" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-7" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            else if (locationNum === 8) {
+                // 題目8 - 星光大道
+                content += '<div id="location-8" class="location-card">';
+                content += '<h2><span class="location-icon">🎬</span> 星光大道<span id="dist-8" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>星光大道於2004年開幕，旨在表揚香港電影業界的傑出人士，仿效好萊塢星光大道，展示明星手印與雕像，是香港電影文化的象徵。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(8,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(8,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>星光大道上哪位武打明星的銅像最為著名？</p>';
+                content += '<input type="text" id="answer-8" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(8,\'李小龍\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(8)">💡 提示 (<span id="hint-count-8">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(8)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-8" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-8" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            else if (locationNum === 9) {
+                // 題目9 - 廟街夜市
+                content += '<div id="location-9" class="location-card">';
+                content += '<h2><span class="location-icon">🌃</span> 廟街夜市<span id="dist-9" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>廟街夜市是香港最具特色的夜市之一，因街旁的榕樹頭天后廟而得名，以平民美食、算命攤檔與小商品聞名，被稱為「平民夜總會」。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(9,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(9,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>廟街夜市因街旁的什麼廟宇而得名？</p>';
+                content += '<input type="text" id="answer-9" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(9,\'天后廟\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(9)">💡 提示 (<span id="hint-count-9">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(9)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-9" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-9" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            else if (locationNum === 10) {
+                // 題目10 - 國際金融中心
+                content += '<div id="location-10" class="location-card">';
+                content += '<h2><span class="location-icon">🏦</span> 國際金融中心（IFC）<span id="dist-10" class="distance-badge">計算中…</span></h2>';
+                content += '<p><strong>故事：</strong>國際金融中心是香港標誌性摩天大樓，二期高415.8米，曾是香港最高建築，象徵香港作為國際金融中心的地位，內有高級商場、辦公室與四季酒店。</p>';
+                content += '<div class="button-group">';
+                content += '<button class="btn btn-danger" onclick="showVideo(10,\'history\')">🎬 歷史影片</button>';
+                content += '<button class="btn btn-info" onclick="showVideo(10,\'story\')">📖 故事進度</button>';
+                content += '</div>';
+                content += '<p><strong>問題：</strong>國際金融中心二期於哪一年落成？</p>';
+                content += '<input type="text" id="answer-10" placeholder="輸入您的答案">';
+                content += '<div class="button-group">';
+                content += '<button class="btn" onclick="checkAnswer(10,\'2003\')">提交答案</button>';
+                content += '<button class="btn btn-warning" onclick="showHint(10)">💡 提示 (<span id="hint-count-10">0</span>/3)</button>';
+                content += '</div>';
+                content += '<div class="selfie-box">';
+                content += '<button class="btn btn-success" onclick="takeSelfie(10)">📸 自拍分享</button>';
+                content += '<canvas id="canvas-10" class="selfie-canvas" width="600" height="600"></canvas>';
+                content += '<img id="selfie-10" class="selfie-img" style="display:none;">';
+                content += '</div>';
+                content += '</div>';
+            }
+            
+            document.getElementById('game-content').innerHTML = content;
+        }
+
+        // 檢查答案
+        function checkAnswer(locationNum, correctAnswer) {
+            var userAnswer = document.getElementById('answer-' + locationNum).value.trim().toLowerCase();
+            var correct = correctAnswer.toLowerCase();
+            var isCorrect = false;
+            
+            // 嚴格比對邏輯
+            if (userAnswer === correct) {
+                isCorrect = true;
+            }
+            // 針對特定題目的寬鬆比對
+            if (locationNum === 2 && userAnswer === '貝聿銘') {
+                isCorrect = true;
+            }
+            if (locationNum === 6 && (userAnswer === '九廣鐵路鐘樓' || userAnswer === '鐘樓')) {
+                isCorrect = true;
+            }
+
+            if (isCorrect) {
+                document.getElementById('answer-' + locationNum).value = '';
+                showPoemThenNext(); // 只有正確才顯示詩句
+            } else {
+                alert('❌ 答案不正確，請再試一次或查看提示。');
+            }
+        }
+
+        // 顯示提示
+        function showHint(locationNum) {
+            hintCounters[locationNum]++;
+            document.getElementById('hint-count-' + locationNum).textContent = hintCounters[locationNum];
+            
+            var hints = {
+                1: {
+                    1: '提示：答案就在問題中！留意「衙門」這個詞。', 
+                    2: '提示：清代衙門的重要建築結構就是「衙門」本身。', 
+                    3: '答案：衙門'
+                },
+                2: {
+                    1: '提示：這位建築師也設計了巴黎羅浮宮玻璃金字塔。', 
+                    2: '提示：他是美籍華裔建築師，姓貝。', 
+                    3: '答案：貝聿銘'
+                },
+                3: {
+                    1: '提示：這位總督的中文名字有兩個字。', 
+                    2: '提示：他是香港第四任總督。', 
+                    3: '答案：寶寧'
+                },
+                4: {
+                    1: '提示：這位神仙的名字有三個字。', 
+                    2: '提示：他是一位道教神仙，姓黃。', 
+                    3: '答案：黃初平'
+                },
+                5: {
+                    1: '提示：這位總督的中文名字有三個字。', 
+                    2: '提示：他是香港首任總督。', 
+                    3: '答案：砵典乍'
+                },
+                6: {
+                    1: '提示：這個建築與鐵路有關。', 
+                    2: '提示：它是一個鐘樓建築。', 
+                    3: '答案：九廣鐵路鐘樓'
+                },
+                7: {
+                    1: '提示：這是一個四位數字的年份。', 
+                    2: '提示：這個年份在19世紀。', 
+                    3: '答案：1888'
+                },
+                8: {
+                    1: '提示：這位明星是功夫電影的傳奇人物。', 
+                    2: '提示：他的英文名字是Bruce Lee。', 
+                    3: '答案：李小龍'
+                },
+                9: {
+                    1: '提示：這是一座供奉海神的廟宇。', 
+                    2: '提示：這座廟宇供奉的是媽祖。', 
+                    3: '答案：天后廟'
+                },
+                10: {
+                    1: '提示：這是一個四位數字的年份。', 
+                    2: '提示：這個年份在21世紀初。', 
+                    3: '答案：2003'
+                }
+            };
+            
+            alert(hints[locationNum][Math.min(hintCounters[locationNum], 3)]);
+            
+            if (hintCounters[locationNum] === 3) {
+                setTimeout(function() { 
+                    hintCounters[locationNum] = 0; 
+                    document.getElementById('hint-count-' + locationNum).textContent = '0'; 
+                }, 2000);
+            }
+        }
+
+        // 顯示影片
+        function showVideo(locationNum, type) {
+            var videoInfo = {
+                1: {
+                    history: {title: '九龍寨城歷史', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '九龍寨城故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                },
+                2: {
+                    history: {title: '中環金融區發展', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '中環故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                },
+                3: {
+                    history: {title: '禮賓府歷史', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '禮賓府故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                },
+                4: {
+                    history: {title: '黃大仙祠文化', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '黃大仙祠故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                },
+                5: {
+                    history: {title: '石板街歷史', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '石板街故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                },
+                6: {
+                    history: {title: '香港文化中心', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '文化中心故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                },
+                7: {
+                    history: {title: '太平山頂歷史', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '太平山頂故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                },
+                8: {
+                    history: {title: '星光大道與香港電影', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '星光大道故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                },
+                9: {
+                    history: {title: '廟街夜市文化', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: '廟街夜市故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                },
+                10: {
+                    history: {title: '國際金融中心', youtubeId: 'dQw4w9WgXcQ'}, 
+                    story: {title: 'IFC故事進度', youtubeId: 'dQw4w9WgXcQ'}
+                }
+            };
+            
+            var info = videoInfo[locationNum][type];
+            document.getElementById('video-title').textContent = info.title;
+            document.getElementById('video-description').textContent = info.title;
+            document.getElementById('video-player').src = 'https://www.youtube.com/embed/' + info.youtubeId + '?autoplay=1&rel=0';
+            document.getElementById('video-modal').style.display = 'flex';
+        }
+
+        // 關閉影片
+        function closeVideo() {
+            document.getElementById('video-modal').style.display = 'none';
+            document.getElementById('video-player').src = '';
+        }
+
+        // 完成遊戲
+        function completeGame() {
+            document.getElementById('game-content').innerHTML = '';
+            
+            var completionHTML = '<div id="completion" class="completion">';
+            completionHTML += '<h2>🎉 恭喜您完成所有探索！</h2>';
+            completionHTML += '<p>您已成功完成香港10個歷史與特色地點的探索！</p>';
+            completionHTML += '<div class="qr-code">';
+            completionHTML += '<h3>完成獎勵二維碼</h3>';
+            completionHTML += '<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=香港歷史特色探索完成&format=png&margin=0" alt="完成獎勵">';
+            completionHTML += '<p class="qr-instruction">掃描此二維碼可獲得數字代碼</p>';
+            completionHTML += '</div>';
+            completionHTML += '<div class="selfie-box">';
+            completionHTML += '<button class="btn btn-success" onclick="takeSelfie(0)">📸 自拍分享完成任務</button>';
+            completionHTML += '<canvas id="canvas-0" class="selfie-canvas" width="600" height="600"></canvas>';
+            completionHTML += '<img id="selfie-0" class="selfie-img" style="display:none;">';
+            completionHTML += '</div>';
+            completionHTML += '<button class="btn btn-success" onclick="resetGame()">重新開始遊戲</button>';
+            completionHTML += '</div>';
+            
+            document.getElementById('game-content').innerHTML = completionHTML;
+            updateProgress();
+        }
+
+        // 重置遊戲
+        function resetGame() {
+            currentLocation = 1;
+            completedLocations.clear();
+            hintCounters = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0};
+            loadGameContent();
+            updateProgress();
+        }
+
+        // 初始化
+        window.addEventListener('load', function() {
+            loadGameContent();
+            updateProgress();
+        });
+
+        // 簡化的自拍功能
+        function takeSelfie(locationNum) {
+            var canvas = document.getElementById('canvas-' + locationNum);
+            var ctx = canvas.getContext('2d');
+            var img = document.getElementById('selfie-' + locationNum);
+            
+            // 繪製背景
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 600, 600);
+            
+            // 繪製文字
+            ctx.fillStyle = '#000000';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            
+            var site = locationNum === 0 ? '香港歷史特色探索' : getLocationName(locationNum);
+            ctx.fillText('我已完成【' + site + '】任務！', 300, 300);
+            
+            // 繪製簡單的相機圖標
+            ctx.fillStyle = '#333333';
+            ctx.fillRect(250, 400, 100, 80);
+            ctx.fillStyle = '#cccccc';
+            ctx.fillRect(270, 420, 60, 40);
+            
+            // 顯示圖片
+            var dataURL = canvas.toDataURL('image/jpeg', 0.9);
+            img.src = dataURL;
+            img.style.display = 'block';
+            
+            // 模擬分享到WhatsApp
+            setTimeout(function() {
+                if (confirm('是否要分享到 WhatsApp？')) {
+                    window.open('https://wa.me/?text=' + encodeURIComponent('我已完成【' + site + '】任務！'), '_blank');
+                }
+            }, 500);
+        }
+
+        // 獲取地點名稱
+        function getLocationName(locationNum) {
+            var locations = {
+                1: '九龍寨城公園',
+                2: '中環金融區',
+                3: '香港禮賓府',
+                4: '黃大仙祠',
+                5: '石板街',
+                6: '香港文化中心',
+                7: '太平山頂',
+                8: '星光大道',
+                9: '廟街夜市',
+                10: '國際金融中心'
+            };
+            return locations[locationNum] || '未知地點';
+        }
+
+        // 簡化的GPS功能
+        function simulateGPS() {
+            var distances = [150, 320, 85, 420, 210, 180, 250, 300, 190, 280];
+            
+            for (var i = 1; i <= 10; i++) {
+                var badge = document.getElementById('dist-' + i);
+                if (badge) {
+                    badge.textContent = distances[i-1] + ' m';
+                    
+                    // 模擬到達地點
+                    if (distances[i-1] < 200 && !completedLocations.has(i)) {
+                        showGPSPrompt(i);
+                    }
+                }
+            }
+        }
+
+        // 顯示GPS提示
+        function showGPSPrompt(poiId) {
+            var prompt = document.getElementById('gpsPrompt');
+            var poiName = getLocationName(poiId);
+            
+            document.getElementById('promptPoiName').textContent = poiName;
+            prompt.dataset.poiId = poiId;
+            prompt.style.display = 'block';
+            
+            // 5秒後自動隱藏
+            setTimeout(function() {
+                if (prompt.style.display === 'block') {
+                    prompt.style.display = 'none';
+                }
+            }, 5000);
+        }
+
+        // 關閉GPS提示
+        function closePrompt() {
+            document.getElementById('gpsPrompt').style.display = 'none';
+        }
+
+        // 播放選擇的影片
+        function playSelected(type) {
+            var poiId = document.getElementById('gpsPrompt').dataset.poiId;
+            closePrompt();
+            showVideo(poiId, type === 'story' ? 'story' : 'history');
+        }
+
+        // 初始化GPS模擬
+        setInterval(simulateGPS, 3000);
+    </script>
+</body>
+</html>
